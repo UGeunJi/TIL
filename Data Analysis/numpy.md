@@ -628,3 +628,322 @@ np.sum(a2, axis = 0)  # 열 축을 따라서
 ```py
 np.sum(a2, axis = 1)  # 행 축을 따라서
 ```
+```py
+import numpy as np
+```
+## 3. 그 외 기능들
+
+### 3.1 배열 전치
+```py
+arr = np.arange(15).reshape((3, 5))  # 3행 5열의 행렬이 준비
+arr
+```
+```py
+arr.T     # Transpose 전치행렬
+```
+```py
+arr * arr # 개별 원소의 곱셈
+```
+### 행렬의 곱셈
+```py
+# arr @ arr 연산은 가능하지 않음 (@은 행렬의 곱셈)
+(3, 5) @ (3, 5)
+```
+#### arr @ arr.T 연산은 가능
+#### (3, 5) @ (5, 3) = (3, 3)
+```py
+arr @ arr.T
+```
+```py
+np.dot(arr, arr.T)
+```
+### 3.2 배열 연산과 조건절 표현하기
+```py
+x_list = [1, 2, 3, 4]
+y_list = [5, 6, 7, 8]
+cond_list = [True, True, False, False]
+```
+```py
+result = []
+for x, y, c in zip(x_list, y_list, cond_list):   # 4번 순회
+    if c:
+        result.append(x)
+    else:
+        result.append(y)
+result
+```
+```py
+x_arr = np.array([1, 2, 3, 4])
+y_arr = np.array([5, 6, 7, 8])
+cond_list = np.array([True, True, False, False])
+```
+### np.where(조건, 조건이 참일 때 취할 깂, 조건이 거짓일 때 취할 값)
+```py
+result = np.where(cond_list, x_list, y_list)
+result
+```
+```py
+arr = np.arange(16).reshape((4, 4))
+arr
+```
+```py
+arr > 10
+```
+```py
+cond = arr > 10
+np.where(cond, 1, -1)
+```
+```py
+arr < 10
+```
+```py
+cond = arr < 10
+result = np.where(cond, 1, arr)
+result
+```
+### 3.3 수학 통계 메서드
+```py
+from IPython.display import Image
+Image('./images/image5.PNG')
+```
+```py
+arr = np.arange(20).reshape((5, 4))
+arr
+```
+```py
+np.sum(arr)
+```
+```py
+arr.sum()
+```
+```py
+np.sum(arr, axis = 0)   # "0번축(열축)을 따라서" 합 구하기
+```
+```py
+arr.sum(0)
+```
+```py
+np.sum(arr, axis = 1)   # "1번축(행축)을 따라서" 합 구하기
+```
+```py
+np.mean(arr, 0)  # arr.mean(0)
+```
+```py
+arr
+```
+```py
+arr.min()
+```
+```py
+arr.min(0)
+```
+```py
+arr.min(1)
+```
+```py
+arr.max()
+```
+```py
+arr
+```
+```py
+arr.cumsum(0)
+```
+```py
+arr.cumsum(1)
+```
+```py
+np.cumprod(arr, 1)
+```
+```py
+np.cumprod(arr, 0)
+```
+### 3.4 불리언 배열 메서드
+```py
+bool_arr = np.array([True, False, True])
+bool_arr
+```
+```py
+bool_arr.all()     # 모두 True여야 True 반환
+```
+```py
+bool_arr.any()     # 하나라도 True면 True 반환
+```
+```py
+arr = np.arange(16).reshape((2, 8))
+arr
+```
+```py
+bool_arr2 = arr < 8
+bool_arr2
+```
+```py
+bool_arr2.all(1)
+```
+```py
+bool_arr2.any(0)
+```
+### 3.5 정렬
+```py
+arr = np.random.randn(3, 4)  # np에서 제공하는 표준정규분포를 따르는 무작위수를 지정한 사이즈로 만들어줌
+arr
+```
+```py
+np.sort(arr, 1)
+```
+```py
+np.sort(arr, 0)
+```
+```py
+arr.sort(1)
+arr
+```
+```py
+arr.sort(0)
+arr
+```
+### 3.6 집합 관련 함수
+```py
+fruits_list = ["strawberry", "strawberry", "pear", "apple"]  
+fruits_list
+```
+```py
+set(fruits_list)     # 파이썬의 집합
+```
+```py
+fruits_array = np.array(["strawberry", "strawberry", "pear", "apple"])
+fruits_array
+```
+```py
+np.unique(fruits_array)
+```
+### 3.7 난수 생성
+```py
+Image('./images/image6.png')
+```
+- 정규 분포에서 표본을 추출
+```py
+samples = np.random.normal(size = 1000, loc = 10, scale = 1)
+samples
+```
+```py
+samples.min()
+```
+```py
+samples.max()
+```
+```py
+samples.mean()
+```
+```py
+samples.std()   # 표준편차 구하기
+```
+```py
+import matplotlib.pyplot as plt
+```
+```py
+plt.hist(samples, 100)
+```
+- 표준 정규분포에서 표본을 추출
+```py
+samples = np.random.randn(1000)
+samples
+```
+```py
+samples.mean(), samples.std()   # 평균 0, 표준편차 1
+```
+- 최대, 최소 범위에서 난수 생성
+
+### 주사위 던지기 
+```py
+for i in range(20):
+    draw = np.random.randint(1, 7)
+    print(draw, end = ' ')
+```
+### 반복문 없이 주사위 던지기 50회 simulation
+```py
+np.random.randint(1, 7, 50)
+
+arr = np.arange(1, 17)
+p = np.random.permutation(arr)
+p.reshape(4, 4)   # 4팀을 무작위로
+```
+## Workshop 
+
+1~45개의 번호 중 무작위로 6개씩 생성되는 번호 세트를 총 10개 출력하기
+```py
+arr = np.arange(1, 46)
+    
+for i in range(10):
+    p = np.random.permutation(arr)
+    a = p[:6]
+    print(a)
+```
+## Workshop
+
+계단 오르 내리기
+
+- 동전을 던졌을 때 앞이 나오면 계단 1칸 올라가기
+- 동전을 던졌을 때 뒤가 나오면 계단 1칸 내려가기
+- 현재 위치 position
+- 1000번 동전을 던졌을 때의 위치의 히스토리: walk 리스트
+```py
+import random
+
+position = 0 # 계단 1칸 오르면 +1, 1칸 내려가면 -1
+steps = 1000
+
+walk = [position] # [0, 1, 0, -1, -2, -3, -2, -1, 0, -1 , 0, 1]
+
+w = 0
+
+for i in range(steps):
+    a = random.randint(0, 1)
+    if a == 1:
+        w += 1
+        walk.append(w)
+    elif a == 0:
+        w -= 1
+        walk.append(w)
+walk
+```
+```py
+walk[-1]
+```
+```py
+plt.plot(walk)
+```
+- 위에서 사용한 파이썬 코드를 사용하지 않고(for문을 사용하지 않고) numpy로 구현
+```
+np.random.randint(): 동전의 앞뒤 결정
+np.where(): 동전의 앞뒤 조건에 따른 step 결정
+np.cumsum(): 현재 위치의 히스토리
+```
+```py
+r = np.random.randint(0, 2, 1000)
+
+arr = np.where(r, +1, -1)
+c = np.cumsum(arr)
+```
+```py
+plt.plot(c)
+```
+```py
+arr = np.array([1, 100, 20, 30])
+```
+```py
+np.min(arr), np.max(arr)
+```
+```py
+np.argmin(arr), np.argmax(arr)    # 위치를 출력
+```
+### 처음 위치에서 10계단 이상 올라가는데 걸린 횟수
+```py
+bool_arr = c >= 10
+np.argmax(bool_arr)  # False는 0, True는 1로 간주
+                     # argmax() 최댓값(1)이 최초로 등장한 index를 알려줌
+                     # 처음 위치에서 10계단 이상 올라가는데 53번의 동전을 던진 것을 확인할 수 있음
+```
+```py
+bool_arr.argmax()
+```
