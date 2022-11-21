@@ -980,3 +980,49 @@ titanic.describe(include = 'all')  # 문자열 정보까지 원할 때
 df = pd.DataFrame({"math" : [50, 60, 40, 30, 70, 50], "physics" : [40, 60, 50, 20, 80, 50]})
 df
 ```
+### 7.1 상관관계와 공분산
+```py
+df = pd.DataFrame({"math" : [50, 60, 40, 30, 70, 50], "physics" : [40, 60, 50, 20, 80, 50]})
+df
+```
+- 산포도(산점도)
+```py
+# pandas, matplotlib, seaborn
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+```py
+df.plot(kind = 'scatter', x = 'math', y = 'physics')  # 기본형: 선 그래프
+```
+- 상관계수
+```py
+df.corr()
+```
+### 범주 데이터 요약
+```py
+titanic = sns.load_dataset('titanic')
+titanic.describe()
+```
+```py
+titanic.describe(include = 'object')
+```
+```py
+titanic.head()
+```
+```py
+titanic['embarked'].unique()  # unique한 원소들
+```
+```py
+titanic['embarked'].nunique()  # unique한 원소들의 개수
+```
+```py
+titanic['embarked'].value_counts()  #  고유값(unique한 원소들)의 빈도수(건수)
+```
+```py
+pd.value_counts(titanic['embarked'])
+```
+```py
+titanic['embarked'].hist()
+```
