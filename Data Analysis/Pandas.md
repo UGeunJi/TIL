@@ -1026,3 +1026,710 @@ pd.value_counts(titanic['embarked'])
 ```py
 titanic['embarked'].hist()
 ```
+
+## 8. 데이터 로딩과 저장
+```py
+import pandas as pd
+import numpy as np
+```
+```py
+!ls examples
+```
+```py
+df = pd.read_csv('./examples/ex1.csv')
+df
+```
+```py
+df.columns
+```
+```py
+pd.read_table('./examples/ex1.csv', sep = ',')
+```
+```py
+pd.read_csv('./examples/ex2.csv', header = None)  # 1행을 header로 가져오는 것이 default인데, 이것을 해체시킴
+```
+```py
+df = pd.read_csv('./examples/ex2.csv', names = ['a', 'b', 'c', 'd', 'message'])
+df
+```
+```py
+names = ['a', 'b', 'c', 'd', 'message']
+df = pd.read_csv('./examples/ex2.csv', names = names)
+df
+```
+```py
+df.set_index('message')
+```
+```py
+df.reset_index()
+```
+```py
+names = ['a', 'b', 'c', 'd', 'message']
+df = pd.read_csv('./examples/ex2.csv', names = names, index_col = 'message')   # 인덱스 이름 동시설정
+df
+```
+```py
+names = ['a', 'b', 'c', 'd', 'message']
+df = pd.read_csv('./examples/ex2.csv', names = names, index_col = 4)   # 인덱스 숫자로 지정
+df
+```
+```py
+df = pd.read_table('./examples/ex3.txt', sep = '\s+')   # 공백 1개 이상의 패턴과 매치시킴
+df
+```
+```py
+df = pd.read_csv('./examples/ex2.csv')
+df
+```
+```py
+df.to_csv('./examples/out.csv', index = False)
+```
+```py
+pd.read_csv('./examples/out.csv')
+```
+
+## 9. 데이터 정제 및 준비
+
+### 9.1 누락된 데이터 처리하기
+
+- 결측치 골라내기
+```py
+type(np.nan)
+```
+```py
+string_data = pd.Series(['abc', 'def', np.nan, 'ghi'])
+string_data
+```
+```py
+pd.isnull(string_data)
+```
+```py
+string_data.isnull()
+```
+```py
+type(None) # 파이썬의 Nonetype 자료형
+```
+```py
+string_data = pd.Series(['abc', 'def', None, 'ghi'])
+string_data
+```
+```py
+string_data.isnull()  # None값도 null로 간주됨
+```
+```py
+data = pd.Series([1, np.nan, 3.5, np.nan, 7])
+data
+```
+```py
+data.isnull()
+```
+```py
+data[data.isnull()]  # boolean 색인
+```
+```py
+# null인 행을 삭제하고 싶다면 null행의 인덱스를 구해서 drop 함수에 적용
+data.drop([1, 3]) # null인 행을 삭제
+```
+```py
+null_idx = data[data.isnull()].index
+data.drop(null_idx, axis = 0)
+```
+```py
+# dropna를 사용하면 null인 행을 삭제
+data.dropna()  # 위의 과정을 이걸로 대체
+```
+```py
+data = pd.DataFrame([[1.0, 6.5, 3.0],
+                     [1.0, np.nan, np.nan],
+                     [np.nan, np.nan, np.nan],
+                     [np.nan, 6.0, 3.0]])
+data
+```
+```py
+data.dropna()  # axis = 0으로 설정되어 있으므로 행을 삭제
+               # how = 'any' 설정되어 있으므로 null이 하나라도 있으면 삭제
+```
+```py
+data.dropna(how = 'any')
+```
+```py
+data.dropna(how = 'all')  # 행을 삭제하되, 그 행에 모든 값이 null인 행만 삭제
+```
+```py
+data[100] = np.nan
+data
+```
+```py
+data.dropna(axis = 1, how = 'all')  # 열을 삭제하되, 그 열의 모든 값이 null일 경우에 삭제
+```
+```py
+data.dropna(axis = 1, how = 'any') # 열을 삭제하되, 그 열의 값이 하나라도 null일 경우에 삭제
+```
+```py
+df = pd.DataFrame(np.random.randn(7, 3))
+df
+```
+```py
+df.iloc[0:4, 1] = np.nan
+df.iloc[0:2, 2] = np.nan
+df
+```
+```py
+df.dropna() # axis = 0, how = 'any'
+```
+```py
+df.dropna(axis = 1)
+```
+```py
+df.dropna(axis = 1, thresh = 5) # thresh = 5: null이 아닌 데이터가 5개 미만인 데이터만 삭제하기
+```
+- 결측치 채우기
+```py
+df.fillna(0)
+```
+```py
+df.fillna({1:0, 2:0.5})  # dictionary를 이용해서 열마다 다른 값으로 대체
+```
+```py
+df.fillna(0, inplace = True)
+df
+```
+```py
+df = pd.DataFrame(np.random.randn(6, 3))
+df
+```
+```py
+df.iloc[2:, 1] = np.nan
+df.iloc[4:, 2] = np.nan
+df
+```
+```py
+df.fillna(axis = 0, method = 'ffill')  # axis = 0이므로 "행축을 따라서" 채워넣기
+```
+```py
+df.fillna(axis = 1, method = 'ffill')  # axis = 0이므로 "열축을 따라서" 채워넣기
+```
+```py
+df.fillna(axis = 0, method = 'ffill', limit = 1)
+```
+```py
+m = df.mean(axis = 0).mean()  # 최종 평균
+df.fillna(m)
+```
+### 9.2 데이터 변형 
+
+- 중복 제거하기
+```py
+data = pd.DataFrame({'k1':['one', 'two']*3 + ['two'],
+             'k2':[1, 1, 2, 3, 3, 4, 4]})
+data
+```
+```py
+# 중복인지 체크
+data.duplicated()
+```
+```py
+data.duplicated(keep='first')
+```
+```py
+data.duplicated(keep='last')
+```
+```py
+data
+```
+```py
+# 중복인지 체크(k1 컬럼 기준으로)
+data.duplicated(['k1'])
+```
+```py
+# k1열 기준으로 삭제
+data.drop_duplicates(['k1'])
+```
+```py
+data.drop_duplicates(['k1'], keep = 'last')
+```
+```py
+data.duplicated(['k1'], keep = 'last')
+```
+```py
+data['v1'] = range(7)
+data
+```
+```py
+data.drop_duplicates()
+```
+```py
+data.drop_duplicates(['k1', 'k2'])
+```
+- 값 치환하기
+```py
+data = pd.Series([1, -999, 2, -999, -1000, 3])
+data
+```
+```py
+data.replace(-999, np.nan)
+```
+```py
+data.replace([-999, -1000], np.nan)
+```
+```py
+data.replace([-999, -1000], [np.nan, 0])
+```
+```py
+data.replace({-999:np.nan, -1000:0})
+```
+- 축 색인 이름 바꾸기
+```py
+data =pd.DataFrame(np.arange(12).reshape(3, 4), index = ['Ohio', 'Colorado', 'New York'], columns = ['one', 'two', 'three', 'four'])
+data
+```
+```py
+data.index
+```
+```py
+# option 1
+def upper_tx(x):
+    return x.upper()
+```
+```py
+data.index.map(upper_tx)
+```
+```py
+# option 2
+upper_tx = lambda x:x.upper()
+data.index.map(upper_tx)
+```
+```py
+# option 3
+data.index.map(lambda x:x.upper())
+```
+```py
+data
+```
+```py
+data.rename(index = {'Ohio':'Indiana'})
+```
+```py
+data.rename(index = str.upper)
+```
+```py
+data.rename(columns = str.upper)
+```
+```py
+data.rename(index = str.upper, columns = str.lower)
+```
+```py
+data.rename(index = str.upper, columns = str.title)
+```
+- 벡터화된 문자열 함수
+```py
+data = {'Dave':'dave@gmail.com',
+        'Steve': 'steve@gmail.com',
+        'Rob':'rob@gmail.com',
+        'Wes':np.nan,
+        'Puppy':'p',
+        'Number':'123'}
+sr_data= pd.Series(data)
+sr_data
+```
+```py
+sr_data.str.isnumeric()   # 숫자인지 물어봄
+```
+```py
+import numpy as np
+import pandas as pd
+```
+
+## 10. 데이터 준비하기
+
+### 10.1 계층적 색인
+```py
+data = pd.Series(np.random.randn(9),
+                 index = [['a', 'a', 'a', 'b', 'b', 'c', 'c', 'd', 'd'],
+                          [1, 2, 3, 1, 3, 1, 2, 2, 3]])
+data
+```
+```py
+data.index
+```
+```py
+data['b']
+```
+```py
+data['b':'c'] # 라벨 색인
+```
+```py
+data.loc['b':'c'] # 라벨색인
+```
+```py
+data.iloc[3:7] # 정수색인
+```
+```py
+data
+```
+```py
+data_unstack = data.unstack()
+data_unstack
+```
+```py
+data_stack = data_unstack.stack()
+data_stack
+```
+```py
+data_stack.unstack()
+```
+```py
+data_stack.unstack().reset_index()
+```
+```py
+data_unstack.stack().reset_index()
+```
+### 10.2 데이터 합치기
+
+- 데이터베이스 스타일로 DataFrame 합치기
+
+- inner join
+```py
+df1 = pd.DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'a', 'b'],
+                    'data1': range(7)})
+df2 = pd.DataFrame({'key': ['a', 'b', 'd'],
+                    'data2': range(3)})
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+pd.merge(df1, df2, on='key', how='inner')
+```
+```py
+# select data1, data1
+#   from df1 a
+#   inner join df2 b
+#     on a.key = b.key;
+```
+```py
+pd.merge(df1, df2, on='key') # how='inner' 가 기본값
+```
+```py
+df3 = pd.DataFrame({'lkey': ['b', 'b', 'a', 'c', 'a', 'a', 'b'], 'data1': range(7)})
+df4 = pd.DataFrame({'rkey': ['a', 'b', 'd'], 'data2': range(3)})
+```
+```py
+df3
+```
+```py
+df4
+```
+```py
+pd.merge(df3, df4, left_on='lkey', right_on='rkey')
+```
+```py
+# select data1, data1
+#   from df1 a
+#   inner join df2 b
+#     on a.lkey = b.rkey;
+```
+- outer join
+
+```py
+df1 = pd.DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'a', 'b'],
+                    'data1': range(7)})
+df2 = pd.DataFrame({'key': ['a', 'b', 'd'],
+                    'data2': range(3)})
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+pd.merge(df1, df2, how='left')
+```
+```py
+pd.merge(df1, df2, how='right')
+```
+```py
+pd.merge(df1, df2, how='outer')
+```
+- 색인 병합하기
+```py
+left1 = pd.DataFrame({'key': ['a', 'b', 'a', 'a', 'b', 'c'], 'value': range(6)})
+right1 = pd.DataFrame({'group_val': [3.5, 7]}, index=['a', 'b'])
+```
+```py
+left1
+```
+```py
+right1
+```
+```py
+pd.merge(left1, right1, left_on='key', right_index = True) #inner join
+```
+```py
+pd.merge(left1, right1, left_on='key', right_index = True, how='outer') #outer join
+```
+```py
+left2 = pd.DataFrame([[1., 2.], [3., 4.], [5., 6.]],
+                     index=['a', 'c', 'e'],
+                     columns=['Ohio', 'Nevada'])
+right2 = pd.DataFrame([[7., 8.], [9., 10.], [11., 12.], [13, 14]],
+                      index=['b', 'c', 'd', 'e'],
+                      columns=['Missouri', 'Alabama'])
+```
+```py
+left2
+```
+```py
+right2
+```
+```py
+pd.merge(left2, right2, right_index=True, left_index=True) # how='inner' 기본값
+```
+```py
+# join 함수는 인덱스 값을 기준으로 조인을 함
+left2.join(right2, how='inner') # pd.merge(left2, right2, right_index=True, left_index=True)
+                                # how='left' 기본값이므로 how='inner'로 바꿔줘야 위와 동일한 결과
+```
+```py
+left1
+```
+```py
+right1
+```
+```py
+pd.merge(left1, right1, left_on='key', right_index = True, how='inner') # inner join
+```
+```py
+left1.join(right1, on='key', how='inner') # 위의 pd.merge와 동일한 결과
+```
+- 축따라 이어붙이기
+
+**참고** np.concatenate
+```py
+arr = np.arange(12).reshape(3, 4)
+arr
+```
+```py
+np.concatenate([arr, arr], axis=0) # axis=0 기본값, 0번축을 따라서 이어붙힘
+```
+```py
+np.concatenate([arr, arr], axis=1)
+```
+```py
+s1 = pd.Series([0, 1], index=['a', 'b'])
+s2 = pd.Series([2, 3, 4], index=['c', 'd', 'e'])
+s3 = pd.Series([5, 6], index=['f', 'g'])
+```
+```py
+s1
+```
+```py
+s2
+```
+```py
+s3
+```
+```py
+pd.concat([s1, s2, s3], axis=0)
+```
+```py
+pd.concat([s1, s2, s3], axis=1)
+```
+```py
+df1 = pd.DataFrame(np.random.randn(3, 4), columns=['a', 'b', 'c', 'd'])
+df2 = pd.DataFrame(np.random.randn(2, 3), columns=['b', 'd', 'a'])
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+pd.concat([df1, df2], axis=0)
+```
+```py
+pd.concat([df1, df2], axis=0, ignore_index=True)
+```
+### Workshop
+
+- 축따라 이어붙이기
+```py
+df1 = pd.DataFrame({'a': ['a0', 'a1', 'a2', 'a3'],
+                    'b': ['b0', 'b1', 'b2', 'b3'],
+                    'c': ['c0', 'c1', 'c2', 'c3']},
+                    index=[0, 1, 2, 3])
+ 
+df2 = pd.DataFrame({'a': ['a2', 'a3', 'a4', 'a5'],
+                    'b': ['b2', 'b3', 'b4', 'b5'],
+                    'c': ['c2', 'c3', 'c4', 'c5'],
+                    'd': ['d2', 'd3', 'd4', 'd5']},
+                    index=[2, 3, 4, 5])
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+# 2개의 데이터프레임을 위, 아래 (행축으로) 이어붙이듯 연결하기
+
+pd.concat([df1, df2], axis=0)
+```
+```py
+# 인덱스를 재 설정
+
+pd.concat([df1, df2], axis=0, ignore_index=True)
+```
+```py
+# 2개의 데이터프레임을 좌, 우 (열축으로) 이어붙이듯 연결하기
+
+pd.concat([df1, df2], axis=1)
+
+sr1 = pd.Series(['e0', 'e1', 'e2', 'e3'], name='e')
+sr2 = pd.Series(['f0', 'f1', 'f2'], name='f', index=[3, 4, 5])
+sr3 = pd.Series(['g0', 'g1', 'g2', 'g3'], name='g')
+```
+```py
+# df1과 sr1을 좌, 우(열축으로) 이어붙이듯 연결하기
+
+df1
+```
+```py
+sr1
+```
+```py
+pd.concat([df1, sr1], axis=1)
+```
+- 데이터베이스 스타일로 DataFrame 합치기
+```py
+df1 = pd.read_excel('./datasets/stock price.xlsx')
+df2 = pd.read_excel('./datasets/stock valuation.xlsx')
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+# id 를 조인 조건으로 해서 inner join
+
+pd.merge(df1, df2, on='id', how='inner')
+```
+```py
+# 위와 같은 결과, 조인조건에 해당하는 컬럼명이 같으면 생략
+pd.merge(df1, df2)
+```
+```py
+# id 를 조인 조건으로 해서 outer join
+
+pd.merge(df1, df2, on='id', how='outer')
+```
+```py
+pd.merge(df1, df2, how='outer')
+```
+```py
+# 왼쪽 데이터프레임(df1)에서는 stock_name, 오른쪽 데이터프레임(df2)에서는 name을 조인조건으로 하되
+# left join
+
+pd.merge(df1, df2, left_on='stock_name', right_on='name', how='left')
+```
+```py
+# 왼쪽 데이터프레임(df1)에서는 stock_name, 오른쪽 데이터프레임(df2)에서는 name을 조인조건으로 하되
+# right join
+
+pd.merge(df1, df2, left_on='stock_name', right_on='name', how='right')
+```
+
+- 색인 병합으로 데이터프레임 합치기
+```py
+df1 = pd.read_excel('./datasets/stock price.xlsx', index_col = 'id')
+df2 = pd.read_excel('./datasets/stock valuation.xlsx', index_col = 'id')
+```
+```py
+df1
+```
+```py
+df2
+```
+```py
+# 데이터프레임 인덱스를 기준으로 병합 (왼쪽 데이터프레임(df1) 기준)
+
+df1.join(df2) # join 함수의 how='left' 가 기본값
+```
+```py
+# 데이터프레임 인덱스를 기준으로 병합 (공통된 인덱스만)
+
+df1.join(df2, how='inner')
+```
+```py
+sr_data.str.isalpha()   # 알파벳인지 물어봄
+```
+```py
+sr_data.str.contains('gmail')  # 어떤 문자열이 들어있는지 물어봄
+```
+- 데이터 구간 분할
+```py
+# 수치형 데이터(양적 데이터) -> 범주형 데이터(질적 데이터)
+ages = [20, 22, 25, 27, 21, 23, 37, 31, 61, 45, 41, 32]
+ages
+```
+```py
+bins = [18, 25, 35, 60, 100]
+cats = pd.cut(ages, bins, labels = ["Youth", "YoungAdult", "MiddleAged", "Senior"])  # 가장 작은 값에서 큰 값까지 n등분
+
+cats
+```
+```py
+pd.value_counts(cats)
+```
+```py
+cats = pd.cut(ages, 4)
+pd.value_counts(cats)
+```
+```py
+qcats = pd.qcut(ages, 4)  # quantile cut
+pd.value_counts(qcats)
+```
+- 특잇값(바깥값, outlier) 찾고 제외하기
+```py
+data = pd.DataFrame(np.random.randn(1000, 4))
+data.describe()
+```
+```py
+# 3보다 큰 값을 특이값(바깥값, outlier)로 가정하고, 해당되는 값을 3으로 치환
+data > 3
+```
+```py
+(data > 3).any(axis = 1) # 열축을 따라서 True값이 하나라도 있는지 확인
+```
+```py
+(data > 3).any(axis = 1).sum()
+```
+```py
+data[(data > 3).any(axis = 1)]
+```
+```py
+data[data>3] = 3
+```
+```py
+data.describe()
+```
+- 더미변수 계산하기(one-hot encoding)
+```py
+df = pd.DataFrame({'fruit':['apple', 'apple', 'pear', 'peach', 'pear'], 'data':range(5)})
+df
+```
+```py
+dummies = pd.get_dummies(df['fruit'], prefix = 'fruit')
+dummies
+```
+```py
+pd.concat([df[['data']], dummies], axis = 1)
+```
