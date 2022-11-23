@@ -1400,14 +1400,14 @@ else:
     print('female')
 ```
 # 최종 코드
-
+```py
 if pin.split('-')[1][0] == '1':
     print('male')
 else:
     print('female')
-
+```
 ---
-
+```py
 print("phone number 출력 문자열")
 y = input()
 z = list(y)
@@ -1415,145 +1415,176 @@ z[:-4] = '*******'
 print(list(z))
 print(str(z))
 print(z)
-
+```
+```py
 def solution(angle):
     answer = (angle // 90) * 2 + (angle % 90 > 0) * 1
     return answer
 
 solution(130)
-
+```
+```py
 solution(40)
-
+```
+```py
 solution(90)
-
+```
+```py
 solution(180)
-
+```
+```py
 phone_number = input()
-
+```
+```py
 phone_number
-
+```
+```py
 phone_number[:-4]
-
+```
+```py
 len(phone_number[:-4])
-
+```
+```py
 # s1 = 시퀀스 객체 * 정수
 s1 = '*'* len(phone_number[:-4])
-
+```
+```py
 s2 = phone_number[-4:]
-
+```
+```py
 ss = s1 + s2
-
+```
+```py
 ss
-
+```
 # 최종 코드
-
+```py
 phone_number = input()
 s1 = '*'* len(phone_number[:-4])
 s2 = phone_number[-4:]
 s1 + s2
-
+```
 # dictionary
 
 - dictionary = {key1:value1, key2:value2, key3:value3, ...}
-
+```py
 year_pop = {2016:9981304, 2017:4072902, 2018:1204857}
 
 type(year_pop)
-
+```
 # 딕셔너리에서는 어떤 값을 찾아가기 위한 유일한 수단이 '키가 됨
 # (Note.) 리스트, 튜플, 문자열 등에서는 어떤 값을 찾아가기 위해 원소의 위치를 직접 계산을 했었음
 
 # 2016년도의 population을 알고 싶다면
+```py
 year_pop[2016]
-
+```
 # 딕셔너리에서는 어떤 값을 찾아가기 위한 유일한 수단 '키'이므로
 # '키'는 중복이 되어서는 안됨
 
 # 아래와 같이 키 값(2016)을 중복해서 사용해도 문법적으로 오류는 안나지만
 # 실제로 중복된 키(2016)로 색인했을 때 올바른 값을 얻어낼 수 없음
 # 중복된 값 중 뒤에 있는 값이 조회가 됨
+```py
 year_pop = {2016:9981304, 2016:4072902, 2018:1204857}
-
+```
+```py
 year_pop[2016]
-
+```
+```py
 year_pop[2016]
-
+```
 # 딕셔너리는 순서가 있는 자료형이 아님 (list나 tuple과는 달리 순서가 없어도 상관없다.)
+```py
 year_pop = {2016:9981304, 2017:4072902, 2018:1204857}
 year_pop
-
+```
 # dictionary's key: string, float, bool, tuple, and so on
 # dictionary's value: all form including list, dictionary 
 
 # 딕셔너리의 키 값으로는 읽기 가능한 자료형이 와야 함(리스트, 딕셔너리 올 수 없음)
-
+```py
 lux = {'health': 490, 'melee': 500, 'armor': 18.72}
 
 lux
-
+```
+```py
 lux = {[1, 2, 3]: 490, 'melee': 500, 'armor': 18.72}    # 딕셔너리의 키에 리스트가 들어간 경우
-
+```
+```py
 lux = {{'k': 'v'}: 490, 'melee': 500, 'armor': 18.72}    # 딕셔너리의 키에 딕셔너리가 들어간 경우
-
+```
+```py
 lux = {(1, 2): 490, 'melee': 500, 'armor': 18.72}    # 딕셔너리의 키에 튜플가 들어간 경우 (OK)
-
+```
 **빈 딕셔너리 만들기**
 - 딕셔너리 = {}
 - 딕셔너리 = dict()
-
+```py
 x = {}
 type(x)
-
+```
+```py
 x = dict()
 type(x)
-
+```
 **dict()로 딕셔너리 만들기**
 - dictionary = dict(zip([key1, key2], [value1, value2]))
 - dictionary = dic([(key1, value1), (key2, value2)])
-
+```py
 zip(['health', 'melee', 'armor'], [490, 500, 18.72])
-
+```
+```py
 list(zip(['health', 'melee', 'armor'], [490, 500, 18.72]))
-
+```
+```py
 dict(zip(['health', 'melee', 'armor'], [490, 500, 18.72]))
-
+```
+```py
 dict([('health', 490), ('melee', 500), ('armor', 18.72)])
-
+```
 **딕셔너리의 키로 값 조회하기**
 - dictionary[key]
-
+```py
 year_pop[2016]
-
+```
+```py
 lux['melee']
-
+```
 **딕셔너리의 값 변경하기**
 - dictionary[key] = value
-
+```py
 lux
-
+```
+```py
 lux['melee'] = 1000
 lux
-
+```
+```py
 lux['attack_speed'] = 500
 
 lux
-
+```
+```py
 lux['power']     # 없는 키로 조회하면 오류
-
+```
 **딕셔너리에 키가 있는지 확인하기**
 - 키 in dictionary
-
+```py
 a = [1, 2, 3]
 1 in a
-
+```
+```py
 'melee' in lux
-
+```
+```py
 'power' in lux
-
+```
+```py
 len(lux)
-
-# Workshop
-
+```
+### Workshop
+```py
 age = int(input())
 balance = 9000
 if age >= 7 and age <= 12:
@@ -1563,10 +1594,12 @@ elif age >= 13 and age <= 18:
 elif age >= 19:
     balance -= 1250
 print(balance)
-
+```
+```py
 age = int(input())
 balance = 9000
-
+```
+```py
 if 7 <= age <= 12:  # 어린이
     balance -= 650
 elif 13 <= age <= 18:  # 청소년
@@ -1576,7 +1609,7 @@ elif age >= 19:    # 성인
 else:
     print("Error")
 print(balance)
-
+```
 ---
 
 **게임 캐릭터 능력 저장**
@@ -1588,7 +1621,7 @@ health health_regen mana mana_regen
 (결과)
 {'health':575.6, 'health_regen':1.7, 'mana':338.8, 'mana_regen':1.63}
 ```
-
+```py
 k = input().split()
 d = input().split()
 
@@ -1598,5 +1631,815 @@ key_list = input().split()
 dict_list = input().split()
 
 dict(zip(key_list, dict_list))
+```
+# Day 2 review
+
+- sequence object
+- index
+- sequence object[index]
+- range, del, ...
+- sequence object[start_index:end_index:interval] (slice), (omit O)
+- dictionary = {key:value}      (sequence X, overlap X)
+
+---
+
+# for, range 사용
+```
+for 변수 in range(횟수):
+    반복할 코드
+```
+```py
+for i in range(10):
+    print("Hello World!", i)
+```
+```
+for 변수 in range(시작, 끝, 증가폭):
+    반복할 코드
+```
+```py
+for i in range(0, 10, 2):
+    print("Hello world!", i)
+```
+```py
+for i in range(10, 0, -1):
+    print("Hello World!", i)
+```
+# enumerate는 시퀀스 객체의 값뿐만 아니라 인덱스까지도 반환해줌
+```py
+for i, v in enumerate(range(0, 10, 2)):
+    print("Hello World!", i, v)     # enumearate를 사용하면 index가 따라붙는다. index는 변수1에, valte는 변수2에 저장
+```
+```
+for 변수 in 시퀀스 객체:
+    반복할 코드
+```
+```py
+for i in "Hello":       # 문자
+    print(i)
+```
+```py
+for i in [1, 2, 3]:       # list
+    print(i)
+```
+```py
+for i in (1, 2, 3):     # tuple
+    print(i)
+```
+- for i in enumearate(sequence object):
+```py
+for i, v in enumerate("Hello"):
+    print(i, v)
+```
+```
+for i in reversed(sequence object):
+    반복할 코드
+```
+```py
+for i in reversed((1, 2, 3)):
+    print(i)
+```
+```py
+for i in reversed("Python"):
+    print(i)
+```
+### Workshop
+```py
+a = int(input())
+for i in range(1, 10):
+    print(a, '*', i, '=' , a * i)
+```
+```py
+"Hello".format()
+```
+# option 1  (format 함수 사용)
+```py
+x = int(input())
+for i in range(1, 10):
+    print("{0} * {1} = {2}".format(x, i, x * i))     # format을 사용하여 C언어에서의 #d, #f, ...와 같은 것들을 파이썬으로 표현
+```
+```py
+x = int(input())
+for i in range(1, 10):
+    print("{2} * {1} = {0}".format(x, i, x * i))         # 입력하는 숫자에 따라서 입력되는 순서가 달라짐
+```
+# option 2   (서식 지정자 %)
+```py
+x = int(input())
+for i in range(1, 10):
+    print("%d * %d = %d" % (x, i, x * i))     # C언어에서의 ,(comma) 대신 파이썬에서는 %를 입력해준다.
+```
+# option 3 (문자열 포매팅(formatting) f를 붙이는 방법)
+```py
+x = int(input())
+for i in range(1, 10):
+    print(f"{x} * {i} = {x * i}")
+```
+```py
+i = 0                         # 초기식
+while i < 10:                # while 조건식
+    print("Hello World!", i)    # 반복할 코드
+    i += 1                  # 변화식 (없으면 무한 실행)
+```
+# while 반복문 사용하기
+
+```
+초기식
+while 조건식:
+    반복할 코드
+    변화식
+```    
+```py
+i = 10
+while i > 0:
+    print("Hello World!")
+    i -= 1
+```
+```py
+import random
+
+random.randint(1, 6)
+
+i = 0
+while i != 3:
+    i = random.randint(1, 6)              
+    print(i)
+```
+---
+```py
+balance = int(input())
+while balance > 1340:
+    balance -= 1350
+    print(balance)
+```
+---
+```py
+for i in range(0, 80):
+    if i % 10 == 3:
+        print(i, end = " ")
+```
+```py
+for i in range(74):
+    if (i % 10) == 3:
+        print(i, end = " ")
+```
+# break문 사용법
+```py
+i = 0
+while True:
+    print(i)
+    i += 1
+    if i == 10:
+        break
+```
+# continue
+```py
+for i in range(74):
+    if (i % 10) != 3:
+        continue
+    else:
+        print(i, end = " ")
+```
+```py
+i = 0
+while True:
+    if i > 73:
+        break
+    print(i)
+    i += 1
+```
+```py
+i = 0
+while True:
+    if i % 10 != 3:
+        i += 1
+        continue
+        
+    if i > 73:
+        break
+    print(i, end = " ")
+    i += 1
+```
+---
+```py
+s = 'life is short, so python is easy.'
+punct = ',.'
+d = {}
+
+s_list = list(s)
+s_list
+```
+```py
+for i in s_list:
+    print('%s의 개수 : %d' % (i,s_list.count(i)))
+    list(zip(list(i), s_list.count(i)))
+```
+```py
+for i in s_list:
+    print('%s의 개수 : %d' % (i,s_list.count(i)))
+```
+```py
+for i in s_list:
+    dict(list(zip(s_list, s_list.count(i))))
+```
+```py
+s = 'life is short, so python is easy.'
+punct = ',. '
+d = {}
+```
+```py
+for c in s:
+    # print(c)
+    if c in punct:
+        continue
+    if c not in d:
+        d[c] = 0
+    if c in d:
+        d[c] += 1
+
+d
+```
+# 중첩 루트 사용하기
+```py
+for j in range(3):
+    for i in range(5):
+        print('*', end = " ")
+    print()
+```
+```
+**계단식으로 별 출력하기 (1)**
+*
+**
+***
+****
+*****
+```
+```py
+for j in range(1, 6):
+    for i in range(5):
+        print(end = " ")
+    print(j * '*')
+```
 
 
+```
+**계단식으로 별 출력하기 (2)**
+*****
+****
+***
+**
+*
+```
+```py
+for j in range(5, 0, -1):
+    for i in range(5):
+        print(end = " ")
+    print(j * '*')
+```
+```py
+for i in range(5):      # i: 0 -> 1 -> 2 -> 3 -> 4
+    # 1. 공백
+    for j in range(i):       # j: 0 -> 1 -> 2 -> 3 -> 4
+        print(" ", end = '')
+        
+    # 2. 별
+    
+    for k in range(5-i): # k: 5 -> 4 -> 3 -> 2 -> 1
+        print("*", end = '')
+    print()
+```
+```
+**별로 산 만들기**
+    *
+   ***
+  *****
+ *******
+*********
+```
+```py
+for i in range(1, 6):      # i: 1 -> 2 -> 3 -> 4 -> 5
+    # 1. 공백
+    for j in range(5-i):   # j: 4 -> 3 -> 2 -> 1 -> 0
+        print(" ", end = "")
+        
+    # 2. 별
+    for k in range(2 * i - 1):   # k: 1 -> 3 -> 5 -> 7 -> 9
+        print("*", end = "")
+    print()
+```
+```py
+for j in range(1, 10, 2):
+    for i in range(5):
+        print(end = " ")
+    print(j * '*')
+```
+# FizzBuzz 문제
+```py
+for i in range(1, 101):
+    if i % 15 == 0:
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)
+```
+# list applying
+
+- append: 요소 하나를 추가
+- extend: 리스트를 연결하여 확장
+- insert: 특정 인덱스에 요소 추가
+```py
+a = [10, 20, 30]
+
+a.append(500)
+
+a
+```
+```py
+a = []
+a.append(10)
+
+a
+```
+```py
+a = [10, 20, 30]
+b = [40, 50, 60]
+
+a.extend(b)
+
+a
+```
+```py
+b
+```
+```py
+a   # 기존 리스트가 변경됨
+```
+# 참고      기존 리스트는 변경되지 않음
+```py
+a = [10, 20, 30]
+b = [40, 50, 60]
+
+a + b
+```
+```py
+a
+```
+```py
+b
+```
+```
+a.insert(location, something to insert)
+```
+```py
+a.insert(1, 500)
+
+a
+```
+- insert(0, element): add at the first of list
+- insert(len(list), element): add at the last of list
+```py
+a = [10, 20, 30]
+a.insert(0, 100)
+a
+```
+```py
+a.insert(len(a), 1000)
+a
+```
+```py
+a.insert(-1, 2000)
+a
+```
+- pop: delete last element or specular index
+- remove: delete someothing value
+```py
+a = [10, 20, 30]
+x = a.pop()
+x
+```
+```py
+a
+```
+```py
+a = [10, 20, 30]
+x = a.pop(1)       # index
+x
+```
+```py
+a
+```
+```py
+a = [10, 20, 30]
+a.remove(20)      # value
+
+a
+```
+- index(value): 리스트에서 특정 값의 인덱스 구함
+- count(value): 리스트에서 특정 값의 개수를 구함
+```py
+a = [10, 20, 30]
+a.index(20)
+```
+```py
+a = [10, 10, 20, 30, 30, 30]
+
+a.count(10)
+```
+```py
+a.count(30)
+```
+- reverse(): 리스트에서 요소의 순서를 반대로 뒤집음.
+- sort(): 리스트의 요소를 정렬함(오름차순 기본값)
+```py
+a = [10, 20, 30]
+a.reverse()
+
+a
+```
+# 참고 슬라이스로 뒤집기
+```py
+a[-1::-1]
+```
+```py
+a = [10, 50, -1, 0, 4, 10000]
+a.sort()     # reverse = False
+a
+```
+```py
+a = [10, 50, -1, 0, 4, 10000]
+a.sort(reverse = True)
+a
+```
+- =
+- copy()
+```py
+a = [0, 0, 0, 0]
+b = a            # 새로운 메모리가 할당되진 않고 a가 쓰는 메모리를 가리키는 것이다.
+
+b
+```
+```py
+a
+```
+```py
+a is b
+```
+```py
+b[1] = 1000
+
+b
+```
+```py
+a is b
+
+a              # 같은 메모리를 공유하기 때문에 b를 바꿔도 a도 바뀜
+```
+```py
+a = [0, 0, 0, 0]
+b = a.copy()       # copy()를 사용해 b를 위한 또다른 메모리 할당
+
+a
+```
+```py
+b
+```
+```py
+a[1] = 1000
+
+a          # 변경된 a의 메모리
+```
+```py
+b          # 변경되지 않은 b의 또다른 메모리
+```
+- copy()와 deepcopy()
+```py
+a = [[10, 20], [30, 40]]    # 2차원 리스트
+b = a
+
+a
+```
+```py
+b
+```
+```py
+b[0]
+```
+```py
+b[0][0] = 3000   # 2차원 리스트를 2번 색인해서 원소값에 접근
+
+b
+```
+```py
+a
+```
+```py
+a = [[10, 20], [30, 40]]
+b = a.copy()
+```
+```py
+b[0][0] = 3000
+b
+```
+```py
+a          # copy()를 사용했음에도 메모리가 따로 할당되지 않았다.
+```
+```py
+import copy                   # import copy module
+
+a = [[10, 20], [30, 40]]
+b = copy.deepcopy(a)          # 2차원 리스트부터는 copy module에 deepcopy를 사용
+
+a
+```
+```py
+b
+```
+```py
+b[0][0] = 3000
+
+b
+```
+```py
+a
+```
+# print the list elements using repeat string
+
+- for element in list
+```py
+a = [10, 20, 30]
+for v in a:
+    print(v)
+```
+```py
+for i in range(len(a)):         # C언어 방식 - 파이썬이 more simple
+    print(a[i])
+```
+- for index, element in enumerate(list):
+```py
+a = [10, 20, 30]
+for i, v in enumerate(a, start = 1):          # start 활용
+    print(i, v)        # i: index, v: value
+```
+**리스트의 가장 작은 수, 가장 큰 수, 합계**
+```py
+a = [10, 20, 30]
+```
+```py
+min(a)
+```
+```py
+max(a)
+```
+```py
+sum(a)
+```
+```py
+sum(a)/len(a)        # average
+```
+**리스트 표현식(List comprehension)**
+
+- [식 for 변수 in 리스트]
+```py
+list(range(10))
+```
+```py
+for i in range(10):
+    print(i * 2)
+```
+# 1. for문 이용, list의 append()함수 이용
+```py
+l = []
+for i in range(10):
+    l.append(i * 2)
+l
+```
+# 2. 리스트 표현식
+```py
+[i * 2 for i in range(10)]
+```
+```py
+word_list = ["Python", "is", "easy"]
+```
+```py
+[6, 2, 4]
+```
+단어 길이 리스트로 구하기
+
+# 1
+```py
+word_count = []
+word_list = ["Python", "is", "easy"]
+for word in word_list:
+    word_count.append(len(word))
+word_count
+```
+# 2
+```
+[len(word) for word in word_list]
+
+- [식 for 변수  in 리스트 if 조건식]
+
+[i for i in range(10) if i % 2 == 0]
+```
+```py
+l = []
+for i in range(10):
+    if i % 2 == 0:
+        l.append(i)
+l
+```
+### Workshop
+```py
+a = ['awfnawkn', 'awkjfa', 'afawf', 'awff', 'awfaw', 'wrtnn', 'nrtnwr', 'asdasd', 'awdaa']
+
+[i for i in a if len(i) == 5]
+```
+**리스트에서 map 사용하기**
+```py
+a = [1.2, 2.5, 3.7, 4.6]
+l = []
+```
+```py
+for i in a:
+    l.append(int(i))
+l
+```
+# 위의 코드와 동일한 결과. But, for문을 사용하지 않고 map을 사용해서 일괄 적용 
+```py
+list(map(int, a))
+```
+# applying tuple
+
+- index(value): 특정값의 인덱스 구하기
+```py
+a = (10, 20, 30)
+a.index(30)
+```
+- count(value): 특정값의 개수 구하기
+```py
+a = (10, 10, 10, 20, 30, 30)
+a.count(10)
+```
+### Workshop
+
+**자동 로또 번호 생성기**
+- 1~45 숫자 중에서 6개를 고르는 로또 번호를 자동으로 만들어 주는 프로그램 작성하기
+- 사용자가 입력한 개수만큼 번호 쌍을 생성하기(예: 5를 입력하면 5 세트의 번호가 생성되도록 하기)
+- 한번 뽑히것은 뽑히지 않도록 하고, 최종 출력은 오름차순 정렬해서 보여주기
+```py
+import random
+
+a = []
+c = []
+b = int(input())
+
+for i in range(6):
+    a.append(random.randint(1, 45))
+    a.sort()
+    
+    if i not in a:
+        for j in range(b):
+            c.append(a)
+print(c)
+```
+```py
+count = int(input("로또 몇 회 뽑으시겠습니까? "))
+
+total = []
+for i in range(count):
+    lotto = []
+    while True:       # 무한 루프는 break문 필수
+        pick = random.randint(1, 45)
+        if pick not in lotto:
+            lotto.append(pick)
+
+        if len(lotto) >= 6:
+            break
+    lotto.sort()
+    total.append(lotto)
+total     
+```
+```py
+count = int(input("로또 몇 회 뽑으시겠습니까? "))
+
+total = []
+for i in range(count):
+    lotto = random.sample(range(1, 46), 6)
+    lotto.sort()
+    total.append(lotto)
+total
+```
+# 문자열 응용하기
+
+- replace('바꿀문자열', '새문자열'): 문자열 바꾸기
+```py
+s = "Hello, World!"
+result = s.replace('World!', 'Python!')
+result
+
+s
+```
+- split('기준문자열'): 문자열 분리하기
+```py
+s = 'apple pear grape pineapple orange'
+result = s.split()
+result
+
+s
+```
+```py
+s = 'apple.pear.grape.pineapple.orange'
+result = s.split('.')
+result
+```
+- '구분자'.join(list)
+
+'-'.join(result)
+
+- upper(): 대문자로 바꿈
+- lower(): 소문자로 바꿈
+- strip(): 문자열 양쪽에 있는 연속된 모든 공백을 삭제
+- lstrip(): 문자열 왼쪽에 있는 연속된 모든 공백을 삭제
+- rstrip(): 문자열 오른쪽에 있는 연속된 모든 공백을 삭제
+```py
+'python'.upper()
+```
+```py
+'PYTHON'.lower()
+```
+```py
+'          python        '.strip()
+```
+```py
+'            python          '.lstrip()
+```
+```py
+'            python          '.rstrip()
+```
+```py
+' .,.    .,     python   .,.,.,.       '.strip(',. ')
+```
+```py
+'python'.center(20)    # 20(길이)만큼의 전체 사이즈를 확보하고 문자열을 중간에 배치
+```
+- index('찾을문자열'): 문자열에서 특정문자열을 찾아서 인덱스를 반환하고, 없으면 에러
+- find('찾을문자열'): 문자열에서 특정문자열을 찾아서 인덱스를 반환하고, 없으면 -1 반환
+```py
+s = 'apple pear grape pineapple orange'
+s.index('pl')
+```
+```py
+s.rindex('pl')    # 오른쪽부터 탐색
+```
+```py
+s.index('oooo')
+```
+```py
+s.find('okkk')
+```
+```py
+s.find('pl')
+```
+```py
+s.rfind('pl')        # index()와 같이 기본적으로 왼쪽부터 찾는다.
+```
+
+- count('문자열'): 현재 문자열에서 특정 문자열이 몇 번이나 나오는지 알아냄
+```py
+s.count('pl')
+```
+**서식 지정자**
+```py
+"나는 지우근입니다."
+```
+```py
+name = input()
+"나는 %s입니다." % name
+```
+```py
+age = int(input())
+"나이는 %d세 입니다." % age
+```
+```py
+score = float(input())
+"제 학점은 %.1f입니다." % score
+```
+```py
+name = input()
+age = int(input())
+score = float(input())
+```
+```py
+"제 이름은 %s이며 나이는 %d세 학점은 %.1f입니다." % (name, age, score)
+```
+**format함수**
+```py
+name = '지우근'
+"나는 {}입니다.".format(name)
+```
+```py
+name = '지우근'
+f"나는 {name}입니다."
+```
