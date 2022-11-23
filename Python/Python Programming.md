@@ -2443,3 +2443,2079 @@ name = '지우근'
 name = '지우근'
 f"나는 {name}입니다."
 ```
+# Applying dictionary
+
+- setdefault: key:value twin add
+- update: 키의 값 수정, 키가 없으면 키-값 쌍 추가
+
+shift + tab: 해당 단어에 대한 정보 열람
+```py
+x = {'a': 10, 'b': 20, 'c': 30, 'd': 40}
+type(x)
+```
+```py
+x.setdefault('e', 50)        # setdefault는 ,(comma)로 연결
+
+x
+```
+```py
+x.setdefault('f')          # value를 추가하지 않으면 None으로 출력
+x
+```
+```py
+x.update({'a': 100, 'b': 200})           # update는 :(colon)으로 연결
+
+x
+```
+```py
+x.update({'a': 1000, 'b': 2000, 'g': 1234})
+
+x
+```
+- pop(key): 특정 키-값 쌍을 삭제한 뒤, 삭제한 값을 반환
+- pop(key, default): 키가 없을 때 기본값을 반환
+- clear(): 딕셔너리의 모든 키-값 쌍을 삭제
+```py
+x
+
+result = x.pop('a')
+result
+```
+```py
+x
+```
+```py
+result = x.pop('a', 0)
+result
+```
+```py
+result = x.pop('b', 0)
+result
+```
+```py
+x
+```
+- get(key): 특정 키의 값을 가져옴
+- get(key, default): 키가 없을 때 기본값을 반환
+```py
+x
+```
+```py
+result = x.get('c')
+result
+```
+```py
+x             # pop()과는 다르게 딕셔너리에서 사라지지 않는다.
+```
+```py
+result = x.get('z', 0)
+result
+```
+```py
+x
+```
+- item(): 키-값 쌍을 모두 가져옴
+- keys(): 키를 모두 가져옴
+- values(): 값을 모두 가져옴
+```py
+x
+```
+```py
+x.items()
+```
+```py
+x.keys()
+```
+```py
+x.values()
+```
+- for key, value in dictionary.items():
+```py
+for k, v in x.items():
+    print(k, v)
+```
+```py
+for k in x.keys():
+    print(k)
+```
+```py
+for v in x.values():
+    print(v)
+```
+# set
+
+- set = {value1, value2, value3, ...}
+```py
+fruits = {'strawberry', ' grape', 'orange', 'pineapple', 'cherry'}
+type(fruits)
+```
+```py
+fruits
+```
+```py
+fruits = {'strawberry', 'strawberry', ' grape', 'orange', 'pineapple', 'cherry'}
+```
+```py
+fruits     # 세트는 중복이 없고(유일한 값만 사용), 순서도 없다.
+```
+```py
+x = {'a', 'a', 'b'}
+y = {'a', 'b', 'a'}
+z = {'b', 'a'}
+```
+```py
+x == y
+```
+```py
+x == z
+```
+```py
+y == z            # 순서, 중복이 없기에 모두 같은 set이다.
+```
+```py
+d = {}
+type(d)
+```
+```py
+s = set()     # 빈 set 만드는 방법
+```
+### Workshop
+
+**리스트와 반복문**
+- 아래에 주어진 리스트 l1의 요소 중에서 l2의 요소와 값이 같은 경우 삭제하는 파이썬 코드 작성하기
+
+```
+l1 = ['a', 'b', 'c', 'd', 'a', 'b', 'a', 'b']
+l2 = ['b', 'a']
+결과 l1
+['c', 'd']
+```
+```py
+l1 = ['a', 'b', 'c', 'd', 'a', 'b', 'a', 'b']
+l2 = ['b', 'a']
+```
+```py
+s1 = set(l1)
+```
+```py
+s1
+```
+```py
+s2 = set(l2)
+
+s2
+```
+```py
+s3 = s1 - s2
+
+s3
+```
+```py
+l3 = list(s3)
+
+l3
+```
+```py
+l1 = ['a', 'b', 'c', 'd', 'a', 'b', 'a', 'b']
+l2 = ['b', 'a']
+```
+```py
+for c2 in l2:    # b -> a
+    while c2 in l1:
+        print(c2, 'will be removed')
+        l1.remove(c2)
+l1
+```
+---
+
+**'the'의 개수 출력하기**
+- 아래 문자열에서 'the'의 개수를 출력하는 프로그램을 만드세요. 
+- 단 , 모든 문자가 소문자인 'the'만 찾으면 되며 'them', 'there', 'their' 등은 포함되지 않아야 합니다.
+```py
+s = "the grown-ups' response, this time, was to advise me to lay aside my drawings of boa constrictors, whether from the inside or the outside, and devote myself instead to geography, history, arithmetic, and grammar. That is why, at the, age of six, I gave up what might have been a magnificent career as a painter. I had been disheartened by the failure of my Drawing Number One and my Drawing Number Two. Grown-ups never understand anything by themselves, and it is tiresome for children to be always and forever explaining things to the."
+
+a = s.count(' the')
+
+a
+```
+```py
+word_list = s.split()
+
+for word in word_list:
+    if word == 'the':
+        print(word)
+```
+```py
+word_list = s.split()
+
+for word in word_list:
+    if word.strip(',.') == 'the':
+        print(word)
+```
+---
+
+**평균 점수 구하기**
+- 다음 소스 코드를 완성하여 평균 점수가 출력되게 만드세요
+```py
+maria = {'korean' : 94, 'english': 91, 'mathmatics': 89, 'science': 83 }
+
+scores = maria.values()
+
+scores
+```
+```py
+average = sum(scores) / len(scores)
+
+average
+```
+```py
+total_v = 0
+for v in maria.values():
+    total_v = total_v + v
+total_v/len(maria)
+```
+---
+
+**딕셔너리에서 특정값 삭제하기**
+- 표준 입력으로 문자열 여러개와 숫자 여러개가 두 줄로 입력되고, 첫 번째 줄은 키, 두번째 줄은 값으로 하여 딕셔너리를 생성합니다.
+- 다음 코드를 완성하여 딕셔너리에서 키가 'delta'인 키-값 쌍과 값이 30인 키-값 쌍을 삭제하도록 만드세요.
+
+```
+입력
+alpha bravo charlie delta
+10 20 30 40
+결과
+{'alpha':10, 'bravo':20}
+```
+```py
+k = ['alpha', 'bravo', 'charlie', 'delta']
+v = [10, 20, 30, 40]
+```
+```py
+d = dict(zip(k, v))
+
+d
+```
+```py
+d.pop('delta')
+
+d
+```
+```py
+d.pop('charlie', 30)
+
+d
+```
+```py
+keys = input("key:: ").split()
+values = map(int, input("value: ").split())
+
+keys
+```
+```py
+values
+```
+```py
+d = dict(zip(keys, values))
+d
+```
+```py
+d.pop('delta')
+d
+```
+### option 1
+```py
+n = {}
+
+for k, v in d.items():
+    if v != 30:
+        n.setdefault(k, v)
+n
+```
+```
+# list comprehension
+[식 for 변수 in 리스트 if 조건식]
+```
+```
+# dictionary comprehension
+{키:값 for 변수 in 리스트 if 조건식}
+```
+### option 2
+```py
+{k : v for k, v in d.items() if v != 30}
+```
+# 최종
+```py
+{k : v for k, v in d.items() if k != 'delta' and v != 30}       # 하나의 식으로 'delta'와 30에 해당되는 키와 값을 모두 제거
+```
+# 파일 사용하기
+
+- 파일객체 = open("파일이름", "파일모드")
+- 파일객체.write("문자열")
+- 파일객체.close()
+```py
+fd = open("hello.txt", "w")
+fd.write("hello world!")
+fd.close()
+```
+```py
+!dir
+```
+- 파일객체 = open("파일이름", "파일모드")
+- 변수 = 파일객체.read()
+- 파일객체.close()
+```py
+fd = open("hello.txt", "r")
+s = fd.read()     # 파일 안에 있는 모든 데이터를 가져옴
+print(s)
+fd.close()
+```
+```
+if xxxxx:
+    ----
+    ----
+```
+```
+with open("파일이름", "파일모드") as fd:
+    코드
+```
+```py
+with open('hello.txt', 'r') as fd:
+    s = fd.read()
+    
+print(s)
+```
+```py
+fd = open("hello.txt", "r")
+s = fd.read()
+print(s)
+fd.close()
+```
+```py
+with open('hello.txt', 'w') as fd:
+    for i in range(3):
+        fd.write("Hello World!!! \n")
+```
+```py
+with open('hello.txt', 'w') as fd:
+    for i in range(3):
+        fd.write("Hello World!!! {} \n".format(i))
+```
+```py
+line_list = ["여기는 \n", "플레이데이터입니다. \n", "오늘도 \n", "화이팅 \n"]
+with open('play.txt', 'w') as fd:
+    fd.writelines(line_list)   #writelines는 여러 라인을 출력할 수 있음
+```
+```py
+with open('play.txt', 'r') as fd:
+    lines = fd.readlines()
+
+lines
+```
+```
+# fd.read(): 파일에 있는 모든 데이터를 읽음
+# fd.readline(): 한 줄로 읽은 문자열을 반환
+# fd.readlines(): 라인별로 읽은 문자열들을 리스트 형태로 반환
+
+# fd.write(문자열): 파일에 문자열을 씀
+# fd.writelines(문자열): 리스트에 있는 여러 문자열을 한 라인씩 씀
+```
+```py
+with open('play.txt', 'r') as fd:
+    line = fd.readline()
+line
+```
+```py
+with open('play.txt', 'r') as fd:
+    line = None
+    while line != '':
+        line = fd.readline()
+        print(line)
+```
+```py
+with open('play.txt', 'r') as fd:
+    line = None
+    while line != '':
+        line = fd.readline()
+        print(line.strip('\n'))
+```
+```py
+import pickle
+```
+```py
+name = "james"  # 파이썬 문자열 객체
+age = 17        # 파이썬 정수 객체
+scores = {'korean': 90, 'english': 80}       # 파이썬 딕셔너리 객체
+```
+```py
+with open("student.pkl", "wb") as fd:          # wb: write binary mode
+    pickle.dump(name, fd)
+    pickle.dump(age, fd)
+    pickle.dump(scores, fd)
+```
+....
+```py
+with open("student.pkl", "rb") as fd:
+    loaded_name = pickle.load(fd)
+    loaded_age = pickle.load(fd)
+    loaded_scores = pickle.load(fd)
+```
+```py
+loaded_name
+```
+```py
+loaded_age
+```
+```py
+loaded_scores
+```
+### Workshop
+
+**파일에서 10자 이하인 단어 개수 세기**
+- 단어가 줄 단위로 저장된 words.txt 파일이 주어집니다. 10자 이하인 단어의 개수가 출력되게 만드세요.
+```py
+with open('words.txt', 'r') as fd:
+    word_list = fd.readlines()
+    for word in word_list:
+        if len(word.rstrip('\n')) <= 10:
+            count += 1
+count
+```
+
+---
+
+**특정 문자가 들어 있는 단어 찾기**
+- 문자열이 저장된 words2.txt 파일이 주어집니다(문자열은 한 줄로 저장되어 있습니다). 
+words2.txt 파일에서 문자 c가 포함된 단어를 각 줄에 출력하는 프로그램을 만드세요.
+단어를 출력할 때는 등장한 순서대로 출력해야 하며 ,(콤마)와 .(점)은 출력하지 않아야 합니다.
+```py
+with open('words2.txt', 'r') as fd:
+    paragraph = fd.read()
+    word_list = paragragh.split()
+    for word in word_list:
+        if 'c' in word:
+            print(word.strip = ',.')
+```
+# 함수
+
+- 코드의 용도 구분
+- 코드를 재사용
+- 실수를 줄일 수 있음
+```py
+def hello():
+    print("Hello World!")
+```
+```
+def 함수이름():
+    코드
+```
+```py
+hello()
+```
+```py
+def add(num1, num2):
+    return num1 + num2
+
+add(1, 2)
+```
+```py
+def add1(a, b):
+    c = a + b
+    print(c)
+```
+```py
+add(1, 2)
+```
+```py
+add(5, 7)
+```
+```py
+add(124, 5129590129501)
+```
+```py
+add(1028508125, 102959012905)
+```
+```
+def 함수이름(매개변수1, 매개변수2):
+    코드
+    return 반환값
+```
+```py
+def add2(a, b):
+    c = a + b
+    return c          # return이 없으면 결과값을 변수에 할당하고 출력할 수가 없게 된다.
+```
+```py
+add2(8129, 1590)
+```
+```
+def 함수이름(매개변수1, 매개변수2):
+    코드
+    return 반환값1, 반환값2
+```
+```py
+def add_sub(a, b):
+    return a + b, a - b
+
+add_sub(10, 5)
+```
+```py
+a
+```
+**I have a dream 연설문 단어 빈도수 계산**
+- WordCount 함수에서 ihaveadream.txt 파일을 열어 전체 내용 중 단어를 키로, 빈도를 값으로 매핑한 사전형 자료를 반환하세요.
+- 단 stopwords.txt에 있는 단어는 제외시킵니다.
+- WordCount 함수의 결과를 result.txt로 저장하세요.
+- majorityCnt 함수에서 사전형 자료를 인수로 받아 값을 기준으로 내림차순으로 정렬하여 값이 가장 큰 키를 반환하세요.
+```py
+with open("ihaveadream.txt", "r") as fd:
+    word = None
+    while word != '':
+        word = fd.readline()
+        print(word.split())
+```
+```py
+with open("stopwords.txt", "r") as fd:
+    stop = None
+    while stop != '':
+        stop = fd.read()
+        a = list(stop.split())
+        
+        print(a)
+```
+```py
+with open ('ihaveadream.txt', 'r') as fd1:
+    speech = fd1.read()
+with open('stopwords.txt', 'r') as fd2:
+    stopwords = fd2.read()
+```
+```py
+word_list = speech.lower().split()
+stop_list = stopwords.lower().split()
+```
+```py
+len(word_list), len(stop_list)
+```
+### option 1
+```py
+d = {}
+for word in word_list:    # word: i -> am -> happy -> ....
+    if word in stop_list:
+        continue
+    if word not in d:
+        d[word] = 1       # 이 단어가 처음 등장해서 최초로 카운트
+    else:
+        d[word] += 1      # 이미 단어가 등록된 경우에는 카운트 누적
+
+d
+```
+### option 2
+```py
+d = {}
+for word in word_list:    # word: i -> am -> happy -> ....
+    if word in stop_list:
+        continue
+    d[word] = d.get(word, 0) + 1      # 이미 단어가 사전에 있으면 pass, 없으면 value로 0을 가져온다.
+
+d
+``
+### option 3
+```py
+def WordCount():
+    d = {}
+    for word in word_list:    # word: i -> am -> happy -> ....
+        if word in stop_list:
+            continue
+        d[word] = d.get(word, 0) + 1      # 이미 단어가 사전에 있으면 pass, 없으면 value로 0을 가져온다.
+    return d
+```    
+```py
+d = WordCount()
+with open('result.txt', 'w') as fd3:
+    fd3.write(str(d))
+```
+**(참고) 정렬**
+```py
+l = [1, 4, 5, 6, -1, -10]
+l.sort()      # 리스트에서 제공하는 sort() 메서드를 사용
+l          # 오름차순으로 정렬된 것이 l에 반영
+```
+```py
+l = [1, 4, 5, 6, -1, -10]
+result = sorted(l)     # sorted() 함수는 다른 시퀀스 객체에서도 사용할 수 있음
+result       # 정렬의 결과물이 반환되고, l은 원본 그래로
+```
+```py
+l
+```
+### 단어의 리스트가 준비
+```py
+words = ["abc", "defgh", "i", "jklm", "nm"]
+```
+```py
+list(map(len, words)) # 각 단어의 길이 값이 나옴
+```
+```py
+sorted(words, key = len)      # key 매개변수에 적당한 함수를 제공해주면, 그에 맞게 정렬
+```
+```py
+# 딕셔너리 정렬  (높은 점수 순으로 정렬)
+scores = {"James": 90, "Selly": 80, "Jun": 100}
+```
+### option 1
+```py
+def return_score(x):
+    # print(x)
+    return x[1]
+```
+```py
+sorted(scores.items(), key = return_score, reverse = True)      # key에 함수만 주어도 자동으로 순서대로 정렬해준다.
+```
+### option 2
+```py
+sorted(scores.items(), key = lambda x : x[1], reverse = True)
+```
+---
+```py
+d
+```
+```py
+sorted(d.items(), key = return_score, reverse = True)
+```
+```py
+def majorityCnt(d):
+    result  = sorted(d.items(), key = return_score, reverse = True)
+    return result[0]
+```
+```py
+most_freq_word = majorityCnt(d)
+print(most_freq_word)
+```
+```py
+def majorityCnt(d):
+    result = sorted(d.items(), key = lambda x : x[1], reverse = True)
+    return result[0]
+```
+```py
+most_freq_word = majorityCnt(d)
+print(most_freq_word)
+```
+**참고** 
+- 단어 리스트에서 개별 단어들 strip 하려면
+```py
+a = ["abc", "def,"]
+```
+```py
+[word.strip(',.') for word in a]
+```
+```py
+list(map(lambda x : x.strip(',.'), a))
+```
+# Day 4 review
+
+- set
+- dictionary method
+- file
+- def function
+- strip 문자열에 사용 가능
+
+# 위치 인수와 키워드 인수
+
+# 위치 인수
+```py
+def print_numbers(a, b, c):
+    print(a)
+    print(b)
+    print(c)
+```
+```py
+print_numbers(10, 20, 30)
+```
+```py
+x = [10, 20, 30]
+print_numbers(*x)       # *는 언패킹한다는 의미
+```
+# 가변 인수
+```py
+def print_numbers(*args):      # args(arguments)는 집합체로 원소의 개수가 가변적인 원소
+    for arg in args:
+        print(arg)
+```
+```py
+print_numbers(200)
+```
+```py
+print_numbers(200, 300)
+```
+```py
+print_numbers(200, 300, 400)
+```
+```py
+print_numbers(200, 300, 400, 500)
+```
+# 키워드 인수
+```py
+def personal_information(name, age, address):
+    print(name)
+    print(age)
+    print(address)
+```
+```py
+personal_information("장경희", 25, "경기 파주")
+```
+```py
+personal_information(name = "지우근", age = 25, address = "경기 파주")
+```
+```py
+personal_information(name = "지우근", address = "경기 파주", age = 25)   # 순서 바뀌어도 함수에 입력되어 있는 순서대로 출력함
+```
+# 초기값 설정
+```py
+def personal_information(name, age, address = "경기 파주"):
+    print(name)
+    print(age)
+    print(address)
+```
+```py
+personal_information(name = "지우근", age = 25)          # 초기값 설정 상태기 때문에 따로 입력해주지 않아도 출력됨
+```
+```py
+personal_information(name = "지우근", age = 25, address = "서울 강남")    # 초기값 변환 가능
+```
+# 딕셔너리를 사용하여 호출하는 경우
+```py
+d = {'name': "지우근", 'age': 25, 'address': "경기 파주"}
+personal_information(*d)
+personal_information(**d)                # 언패킹 1회: key 출력, 언패킹 2회: value 출력
+```
+# 키워드 인수를 가변적으로 처리
+```py
+def personal_info(**kwargs):        # kwargs에는 가변적인 개수의 키와 값의 쌍으로 이루어짐
+    for k, v in kwargs.items():
+        print(k, v)
+```
+```py
+personal_info(name = "지우근", age = 25, adderss = "파주", sex = 'male', blood = 'AB')
+```
+# 함수에서 재귀 호출 사용하기
+```py
+def hello():
+    print("Hello")
+    hello()
+hello()
+```
+```py
+def hello(count):
+    if count == 0:        # 재귀 호출 할 경우에는 종료 조건이 반드시 있어야 함
+        return
+    print('hello world', count)
+    count -= 1
+    hello(count)
+```
+```py
+hello(5)
+```
+# 재귀 함수는 반복문을 통해서도 동일하게 구현 가능
+```py
+def hello(count):
+    for i in range(count):
+        print('hello world')
+```
+```py
+hello(7)
+```
+```py
+10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1
+```
+```py
+a = 0
+for i in range(10, 0, -1):
+    a += i
+a
+```
+```py
+def add_sum(i):
+    if i == 1:
+        return 1
+    
+    sum = i + add_sum(i - 1)
+    
+    return sum
+```
+```py
+add_sum(10)
+```
+---
+
+# 재귀함수 연습
+
+### 코딩 테스트를 위한 연습
+```
+# 팩토리얼 (반복)
+# n! = n * (n - 1) * (n - 2) * (n - 3) * ... * 1
+```
+```py
+fact_val = 1
+for i in range(5, 0, -1):
+    fact_val = fact_val * i
+    
+print(fact_val)
+```
+# 팩토리얼 (재귀함수)
+```py
+def fact(n):
+    if n == 1:
+        return 1
+    fact_val = n * fact(n - 1)
+    
+    return fact_val
+```
+```py
+fact(6)
+```
+# 구구단 출력
+```py
+def gugu(n):
+    if n == 9:
+        return 9
+    gugudan = n + gugu(n + 1)
+    
+    return gugudan
+```
+```py
+gugu(0)
+```
+```py
+def gugu(x, y):       # x: 단위, y: 1, 2, ...
+    print(x, '*', y, '=', x * y)
+    if y < 9:
+        gugu(x, y + 1)
+gugu(2, 1)
+```
+```py
+for dan in range(2, 10):
+    print('------ \n')
+    gugu(dan, 1)
+```
+# lambda 표현식
+```py
+def plus_ten(x):
+    return x +10
+```
+```py
+plus_ten(2)
+```
+- lambda 매개변수: 식
+```py
+plus_ten = lambda x : x + 10
+```
+```py
+plus_ten(1)
+```
+```py
+(lambda x : x + 10) (1)
+```
+- lambda 매개변수: 식1 if 조건식 else 식2
+```py
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
+```
+# 3의 배수이면 문자열로 만들고, 그렇지 않으면 있는 그대로 출력하기
+# lambda 식 이용
+```
+```py
+myformat = lambda x : str(x) if x % 3 == 0 else x
+```
+```py
+list(map(myformat, a))
+```
+```py
+list(map(lambda x : str(x) if x % 3 == 0 else x, a))
+```
+```py
+a = [1, 2, 3, 4, 5]
+b = [2, 4, 6, 8, 10]
+```
+```py
+mul = lambda x, y : x * y
+```
+# 두 리스트를 요소별로 곱셈한 결과를 리스트로 출력
+```py
+list(map(mul, a, b))
+```
+- map(함수, 반복 가능한 객체): 반복 가능한 객체에 함수를 일괄 적용
+- filter(함수, 반복 가능한 객체): 반복 가능한 객체에 함수에서 출력하는 조건에 맞는 것만 가져옴
+```py
+def f(x):
+    return x > 5 and x < 10    # True or False
+```
+```py
+a = [3, 2, 8, 10, 1, 16, 21, 0]
+```
+```py
+list(filter(f, a))
+```
+### Workshop
+
+**거리계산**
+- 리스트를 이용하여 점 사이의 거리를 계산 해 보자.
+- 직교 좌표 위에서 A는 (1, 1), B는 (3, 2), C는 (5,7)일 때 X(2, 3)와  A/B/C와의 거리를 각각 구하여라.
+- 위 코드블럭을 이용하여 distMeasure 함수를 정의하라.
+```py
+import math
+```
+```py
+points = [(1, 1), (3, 2), (5, 7)]     # A B C
+x = (2, 3)
+```
+```py
+dis = lambda x, y : ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** (1 / 2)     # 리스트 간의 크기가 다르기 때문에 함수를 통해 해결
+```
+```py
+distance = list(map(dis, points[i], x))       # map 자체가 일괄적용이 되기 때문에 for문을 사용할 필요는 없다
+print(distance)
+```
+### option 1
+```py
+points = [(1, 1), (3, 2), (5, 7)]     # A B C
+x = (2, 3)
+```
+```py
+def distMeasure():
+    result = []
+    for point in points:   # A, B, C
+        dist = ((point[0] - x[0]) ** 2 + (point[1] - x[1] ** 2)) ** (1 / 2)
+        print(dist)
+    return result
+```
+```py
+result = distMeasure()
+result
+```
+### option 2
+```py
+points = [(1, 1), (3, 2), (5, 7)]     # A B C
+x = (2, 3)
+```
+```py
+def distMeasure_1p(point):   # A or B or C
+    dist = ((point[0] - x[0]) ** 2 + (point[1] - x[1]) ** 2) ** (1 / 2)
+    return dist
+```
+```py
+list(map(distMeasure_1p, points))
+```
+### option 3
+```py
+distMeasure_2p = lambda point: ((point[0] - x[0]) ** 2 + (point[1] - x[1]) ** 2) ** (1 / 2)
+```
+```py
+list(map(distMeasure_2p, points))
+```
+### option 4
+```py
+list(map(lambda point: ((point[0] - x[0]) ** 2 + (point[1] - x[1]) ** 2) ** (1 / 2), points))
+```
+**이미지 파일만 가져오기**
+- 다음 소스 코드를 완성하여 확장자가 .jpg, .png인 이미지 파일만 출력되게 만드세요. 여기서는 람다 표현식을 사용해야 하며 출력 결과는 리스트 형태라야 합니다. 람다 표현식에서 확장자를 검사할 때는 문자열 메서드를 활용하세요.
+```
+files = ['font', '1.png', '10.jpg', '11.gif', '2.jpg', '3.png', 'table.xslx', 'spec.docx']
+실행결과
+['1.png', '10.jpg', '2.jpg', '3.png']
+```
+```py
+files = ['font', '1.png', '10.jpg', '11.gif', '2.jpg', '3.png', 'table.xslx', 'spec.docx']
+a = []
+for word in files:
+    if '.png' in word:
+        a.append(word)
+    elif '.jpg' in word:
+        a.append(word)
+a
+```
+```py
+def filter_img(file):
+    if ('jpg' in file) or ('png' in file):
+        return True
+list(filter(filter_img, files))
+```
+```py
+'10.jpg'.find('.jpg')
+```
+```py
+def filter_img(file):
+    if file.find('.jpg') != -1 or file.find('png') != -1:
+        return True
+list(filter(filter_img, files))
+```
+```py
+filter_img = lambda file: file.find('.jpg') != -1 or file.find('png') != -1
+```
+```py
+list(filter(filter_img, files))
+```
+```py
+list(filter(lambda file: file.find('.jpg') != -1 or file.find('png') != -1, files))
+```
+**파일 이름을 한꺼번에 바꾸기**
+```
+표준 입력으로 숫자.확장자 형식으로 된 파일 이름 여러 개가 입력됩니다.
+파일 이름이 숫자 3개이면서 앞에 0이 들어가는 형식으로 출력되게 만드세요. 
+예를 들어 1.png는 001.png, 99.docx는 099.docx, 100.xlsx는 100.xlsx처럼 출력되어야 합니다. 
+그리고 람다 표현식을 사용해야 하며 출력 결과는 리스트 형태라야 합니다.
+람다 표현식에서 파일명을 처리할 때는 문자열 포매팅과 문자열 메서드를 활용하세요.
+```
+```py
+files = input().split()
+```
+```py
+files
+```
+```py
+names = []
+exts = []
+for file in files:
+    name = file.split('.')[0]
+    names.append(int(name))
+    
+    ext = file.split('.')[1]
+    exts.append(ext)
+```
+```py
+names = []
+for file in files:
+    name = file.split('.')
+    names.append(name)
+
+names
+```
+```py
+names, exts
+```
+```py
+names
+```
+```py
+name = 1
+ext = 'jpg'
+# 001.jpg
+"{:03d}.{}".format(name, ext) 
+```
+```py
+def fmt(name, ext):
+    return "{:03d}.{}".format(name, ext)
+```
+```py
+list(map(fmt, names, exts))
+```
+```py
+list(map(lambda name, ext : "{:03d}.{}".format(name, ext), names, exts))
+```
+# 변수의 사용범위
+```py
+x = 10
+```
+```py
+def foo():
+    print("foo()", x)
+```
+```py
+foo()
+print("main()", x)
+```
+```py
+x = 10     # 전역 변수
+```
+```py
+def foo():      # 지역 변수
+    x = 20
+    print("foo()", x)
+    
+foo()
+print("main()", x)
+```
+```py
+x = 10     # 전역 변수
+
+def foo():      # 지역 변수
+    global x      # 전역변수화
+    x = 20
+    print("foo()", x)
+    
+foo()
+print("main()", x)    # 함수 내부에서 수정된 x가 바깥에서도 유효 (x가 global로 선언)
+```
+# 클래스
+
+```
+class 클래스이름:        # 붕어빵 틀
+    def method(self):
+        code
+```
+
+class Person:
+    def greeting(self):
+        print("Hello")
+
+```
+인스턴스 = 클래스() # 붕어빵
+```
+```py
+james = Person()
+mary = Person()
+```
+```py
+james.greeting()
+```
+```py
+mary.greeting()
+```
+```
+인스턴스.메서드()
+```
+```py
+# 파이썬에서 흔히 볼 수 있는 클래스
+a = int(10)
+print(type(a))
+```
+```py
+b = list(range(10))
+print(type(b))
+```
+```py
+b.append(3) # 인스턴스 메서드를 사용한 예
+```
+```
+class 클래스 이름:
+    def __init__(self):
+        self.속성 = 값    # 붕어빵 앙꼬
+```
+```py
+class Person:
+    def __init__(self):
+        self.hello = "안녕하세요"
+    
+    def greeting(self):
+        print(self.hello)
+
+james = Person()
+james.greeting()
+
+selly = Person()
+selly.greeting()
+```
+```
+class 클래스 이름:
+    def __init__(self, 매개변수1, 매개변수2, ....):
+        self.속성 = 매개변수1
+        self.속성 = 매개변수2
+        
+```
+```py
+class Person:
+    def __init__(self, hello_msg):
+        self.hello = hello_msg
+    
+    def greeting(self):
+        print(self.hello)
+    
+
+james = Person("안녕하십니까")
+james.greeting()
+
+selly = Person("하이")
+selly.greeting()
+```
+```py
+class Person:
+    def __init__(self, hello_msg, name, age, address):
+        self.hello = hello_msg
+        self.name = name
+        self.age = age
+        self.address = address
+    
+    def greeting(self):
+        print(self.hello)
+        print("저는 {}입니다.".format(self.name))
+        print("나이는 {}살입니다. ".format(self.age))
+        print("사는 곳은 {}입니다.".format(self.address))
+    
+```
+```py
+UGeun = Person("하이", "우근", 25, "집")
+```
+```py
+UGeun.greeting()
+```
+```py
+maria = Person("Hi", "마리아~", 21, "지이이입")
+maria.greeting()      # method 호출
+```
+```py
+maria.name
+```
+```py
+maria.age
+```
+```py
+maria.address
+```
+```py
+maria.hello
+```
+```py
+class 클래스이름:
+    def __init__(self, 매개변수):
+        self.__속성 = 값     # 비공개 속성
+```
+```py
+class Person:
+    def __init__(self, hello_msg, name, age, address, wallet):
+        self.hello = hello_msg
+        self.name = name
+        self.age = age
+        self.address = address
+        self.__wallet = wallet   # 비공개 속성
+    
+    def greeting(self):
+        print(self.hello)
+        print("저는 {}입니다.".format(self.name))
+        print("나이는 {}살입니다. ".format(self.age))
+        print("사는 곳은 {}입니다.".format(self.address))
+        
+    def pay(self, amount):
+        self.__wallet = self.__wallet - amount
+        print("지갑에 {}원 남았습니다.".format(self.__wallet))
+```
+```py
+selly = Person("안뇽", "selly", 22, "강남역", 100000000000)
+```
+```py
+selly.greeting()
+```
+```py
+selly.name
+```
+```py
+selly.wallet    # 비공개 속성은 외부에서 접근하면 에러가 생김
+```
+```py
+selly.pay(2124214000)
+```
+ # 클래스 속성과 인스턴스 속성
+
+```
+class 클래스 이름:
+    속성 = 값
+```
+
+- 클래스 속성; 모든 인스턴스들이 공유. 인스턴스 전체가 사용해야 하는 값을 저장할 때 사용
+- 신스턴스 속성: 인스턴스 별로 독립되어 있음. 각 인스턴스 값을 따로 저장할 때 나옴
+
+# 클래스 속성 bag을 사용하여 인스턴스 모두가 공용으로 사용
+```py
+class Person:
+    bag = []
+    
+    def put_bag(self, stuff):
+        Person.bag.append(stuff)
+```
+```py
+james = Person()
+```
+```py
+james.put_bag("책")
+```
+```py
+maria = Person()
+maria.put_bag("열쇠")
+```
+```py
+james.bag
+```
+```py
+maria.bag
+```
+```py
+class Person:          # 인스턴스마다 bag 속성을 따로 관리
+    def __init__(self):
+        self.bag = []
+    
+    def put_bag(self, stuff):
+        self.bag.append(stuff)
+```
+```py
+james = Person()
+james.put_bag("책")
+```
+```py
+maria = Person()
+maria.put_bag("열쇠")
+```
+```py
+james.bag
+```
+```py
+maria.bag
+```
+# 클래스 상속 사용하기
+```
+class 기반클래스이름:
+    코드
+
+class 파생클래스이름(기반클래스)
+```
+```py
+class Person:
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class student(Person):
+    def study(self):
+        print("공부중입니다")
+```
+```py
+james = student()    # 상속을 받았다
+```
+```py
+james.study()
+```
+```py
+james.greeting()    # 상속받은 부모 클래스(Person)의 기능까지도 사용 가능
+```
+```py
+class Person:
+    def __init__(self):
+        print("Person Initialized")
+        
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class Student(Person):
+    def __init__(self):
+        print("student Initialized")
+        
+    def study(self):
+        print("공부중입니다")
+```
+```py
+james = Student()   # 자식 클래스에 __init__가 정의되어 있다면 이것이 우선
+```
+```py
+class Person:
+    def __init__(self):
+        print("Person Initialized")
+        
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class Student(Person):
+    # def __init__(self):
+    #     print("student Initialized")
+        
+    def study(self):
+        print("공부중입니다")
+```
+```py
+james = Student() # 자식 클래스에 __init__가 정의되어 있지 않다면 부모 클래스 __init__
+```
+```py
+class Person:
+    def __init__(self):
+        print("Person Initialized")
+        self.hello = "안녕하세요"
+        
+    def greeting(self):
+        print(self.hello)
+```       
+```py
+class Student(Person):
+    def __init__(self):
+        print("student Initialized")
+        
+    def study(self):
+        print("공부중입니다")
+```
+```py
+james = Student()
+james.study()
+```
+```py
+james.greeting()
+```
+```py
+class Person:
+    def __init__(self):
+        print("Person Initialized")
+        self.hello = "안녕하세요"
+        
+    def greeting(self):
+        print(self.hello)
+```
+```py
+class Student(Person):
+    def __init__(self):
+        super().__init__()  # 부모 클래스의 __init__()를 강제로 호출
+        print("student Initialized")
+        
+    def study(self):
+        print("공부중입니다")
+```
+```py
+james = Student()
+james.greeting()
+```
+**메서드 오버라이딩**
+```py
+class Person:
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class Student(Person):
+    def greeting(self):
+        print("안녕하세요. 저는 인공지능 과정 25기 학생입니다.")
+```
+```py
+kai = Student()
+kai.greeting()
+```
+```py
+class Person:
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class Student(Person):
+    def greeting(self):
+        super().greeting()
+        print("저는 인공지능 과정 25기 학생입니다.")
+```
+```py
+james = Student()
+james.greeting()
+```
+**다중 상속 사용하기**
+
+```
+class 기반클래스1:
+    코드
+
+class 기반클래스2:
+    코드
+    
+class 파생크래스(기반클래스1, 기반클래스2):
+    코드
+```
+```py
+class Person:
+    def greeting(self):
+        print("안녕하세요")
+```
+```py
+class University:
+    def manage_credit(self):
+        print("학점 관리")
+```
+```py
+class Undergraduate(Person, University):
+    def study(self):
+        print("공부하기")
+```
+```py
+james = Undergraduate()
+james.study()
+```
+```py
+james.manage_credit()
+```
+```py
+james.greeting()
+```
+**추상클래스**
+
+```
+from abc import *
+
+class 추상클래스(metaclass = ABCmeta):
+    @abstractmethod
+    def 메서드이름(self):
+        코드
+```
+```py
+from abc import *
+```
+```py
+class StudentBase(metaclass = ABCMeta):
+    @abstractmethod
+    def study(self):
+        pass
+    
+    @abstractmethod
+    def gotoschool(self):
+        pass
+```
+```py
+class Student(StudentBase):
+    def study(self):
+        print("공부하기")
+    
+    def gotoschool(self):
+        print("학교가기")
+```
+```py
+james = Student()
+james.study()
+```
+### Workshop
+
+**리스트에 기능 추가하기**
+- 아래 예시와 같이 리스트(list)에 replace 메서드를 추가한 AdvancedList 클래스를 작성하세요. AdvancedList는 list를 상속받아서 만들고, replace 메서드는 리스트에서 특정 값으로 된 요소를 찾아서 다른 값으로 바꾸도록 만드세요.
+```
+x = AdvancedList([1, 2, 3, 1, 2, 3, 1, 2, 3])
+x.replace(1, 100)
+print(x)
+결과
+[100, 2, 3, 100, 2, 3, 100, 2, 3]
+```
+
+### option 1
+```py
+class AdvancedList(list):
+    def replace(self, old, new):        # self: list 형의 데이터 (예: [1, 2, 3, ...])
+        for idx, v in enumerate(self):    # idx: 0, 1, 2, 3, ....  v: 1, 2, 3, 1, 2, 3
+            if v == old:
+                self[idx] = new   # x[0] = 100, x[3] = 100, x[6] = 100
+```                
+
+### option 2
+```py
+class AdvancedList(list):
+    def replace(self, old, new):        # self: list 형의 데이터 (예: [1, 2, 3, ...])
+        while old in self:
+            idx = self.index(old)
+            self[idx] = new
+
+x = AdvancedList([1, 2, 3, 1, 2, 3, 1, 2, 3])
+x.replace(1, 100)
+print(x)
+```
+# 예외 처리하기
+- 예외처리는 에러가 발생하더라도 스크립트 실행을 중단하지 않고 계속 실행하고자 할 때 사용함
+```py
+x = int(input("나눌 숫자를 입력하세요: "))
+```
+```py
+y = 10 / x
+print(y)
+```
+```
+try:
+    실행할 코드
+except:
+    예외가 발생했을 때 처리할 코드
+```
+```py
+try:
+    x = int(input("나눌 숫자를 입력하세요: "))
+    y = 10 / x
+    print(y)
+except:
+    print("예외가 발생했습니다.")
+```
+```py
+try:
+    x = int(input("나눌 숫자를 입력하세요: "))
+    y = 10 / x
+    print(y)
+except:
+    print("예외가 발생했습니다.")
+    x = int(input("0이 아닌 숫자를 다시 입력해주세요: "))
+    y = 10 / x
+    print(y)
+```
+```
+특정 예외만 처리하기
+
+try:
+    실행할 코드
+except 예외이름1:
+    예외가 발생했을 때 처리할 코드
+except 예외이름2:
+    예외가 발생했을 때 처리할 코드
+```
+```py
+try:
+    x = int(input("나눌 숫자를 입력하세요: "))
+    y = 10 / x
+    print(y)
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+```
+```py
+y = [10, 20, 30]
+index = int(input("인덱스를 입력하세요"))
+print(y[index])
+```
+```py
+y = [10, 20, 30]
+```
+```py
+try:
+    index, x = map(int, input("인덱스와 나눌 숫자를 입력하세요: ").split())
+    y = y[index] / x
+    print(y)
+    
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+    
+except IndexError:
+    print("잘못된 인덱스입니다.")
+```
+```
+예외 메시지 출력하기
+
+try:
+    실행할 코드
+except 예외이름1 as 변수:
+    예외가 발생했을 때 처리할 코드
+```
+```py
+y = [10, 20, 30]
+```
+```py
+try:
+    index, x = map(int, input("인덱스와 나눌 숫자를 입력하세요: ").split())
+    y = y[index] / x
+    print(y)
+    
+except ZeroDivisionError as e:
+    print("0으로 나눌 수 없습니다.", e)
+    
+except IndexError as e:
+    print("잘못된 인덱스입니다.", e)
+```
+```py
+y = [10, 20, 30]
+```
+```py
+try:
+    index, x = map(int, input("인덱스와 나눌 숫자를 입력하세요: ").split())
+    y = y[index] / x
+    print(y)
+    
+except ZeroDivisionError as e:
+    print("0으로 나눌 수 없습니다.", e)
+    
+except IndexError as e:
+    print("잘못된 인덱스입니다.", e)
+```
+```
+예외 발생 여부에 따라 분기
+
+try:
+    실행할 코드
+except 예외이름1 as 변수:
+    예외가 발생했을 때 처리할 코드
+else:
+    예외가 발생하지 않았을 때 실행할 코드
+```
+```py
+y = [10, 20, 30]
+```
+```py
+try:
+    index, x = map(int, input("인덱스와 나눌 숫자를 입력하세요: ").split())
+    y = y[index] / x    # <-- 문제가 생겼을 때 예외가 발생하는 위치
+    
+except ZeroDivisionError as e:
+    print("0으로 나눌 수 없습니다.", e)
+    
+except IndexError as e:
+    print("잘못된 인덱스입니다.", e)
+
+else:
+    print(y)
+```
+```
+예외 발생 여부 상관없이 처리(finally)
+
+try:
+    실행할 코드
+except 예외이름1 as 변수:
+    예외가 발생했을 때 처리할 코드
+else:
+    예외가 발생하지 않았을 때 실행할 코드
+finally:
+    예외 발생 여부와 상관없이 항상 실행할 코드
+```
+```py
+y = [10, 20, 30]
+```
+```py
+try:
+    index, x = map(int, input("인덱스와 나눌 숫자를 입력하세요: ").split())
+    y = y[index] / x    # <-- 문제가 생겼을 때 예외가 발생하는 위치
+    
+except ZeroDivisionError as e:
+    print("0으로 나눌 수 없습니다.", e)
+    
+except IndexError as e:
+    print("잘못된 인덱스입니다.", e)
+
+else:
+    print(y)
+    
+finally:
+    print("프로그램이 종료되었습니다.")
+```
+```
+예외 발생시키기
+
+raisse exeeption("에러메시지")
+```
+```py
+x = int(input("3의 배수를 입력하세요: "))
+if x % 3 != 0:    # 3으로 나눴을 때 나머지가 0이 아닌 때
+    raise Exception("3의 배수가 아닙니다.")
+
+try:
+    x = int(input("3의 배수를 입력하세요: "))
+    if x % 3 != 0:    # 3으로 나눴을 때 나머지가 0이 아닌 때
+        raise Exception("3의 배수가 아닙니다.")
+except Exception as e:     # e는 에러메시지를 받는 공간
+    print("예외가 발생했습니다.", e) 
+```
+# 이터레이터
+
+- **이터레이터(iterator)**는 값을 차례대로 꺼낼 수 있는 객체(object)
+- 파이썬에서는 이터레이터만 생성하고 값이 "필요한 시점" 되었을 때 값을 만드는 방식을 사용
+- 데이터 생성을 뒤로 미루는 방식을 지연평가(lazy evaluation)라고 함
+
+
+- **반복 가능한 객체** 는 말 그대로 반복할 수 있는 객체인데 문자열, 리스트, 딕셔너리, 세트가 그 예임
+- 객체 안에 요소가 여러 개 들어있고, 한 번에 하나씩 꺼낼 수 있는 객체
+
+
+- 객체가 반복 가능한 객체인지 알아보는 방법은 객체의 iter 메서드가 들어 있는지 확인해 보면 됨
+```py
+l = [1, 2, 3]
+l    # 반복 가능한 객체
+```
+```py
+dir(l)
+```
+```py
+iter = l.__iter__()    # l = [1, 2, 3]
+iter                   # 이터레이터
+```
+```py
+iter.__next__()    # 실체가 없는 것의 데이터를 가져온 것임
+```
+```py
+iter.__next__()
+```
+```py
+iter.__next__()
+```
+```py
+iter.__next__()
+```
+```py
+for i in range(10):
+    print(i)
+
+s = "Hello World"
+s # 반복 가능한 객체
+```
+```py
+dir(s)
+```
+```py
+s.__iter__()
+```
+```py
+d = {"a": 1, "b": 2}
+```
+```py
+d.__iter__()
+```
+# 이터레이터 만들기
+
+```
+class 이터레이터 이름:
+    def __iter__(self):
+        코드
+    def __next__(self):
+        코드
+```
+
+# range()와 유사한 이터레이터
+```py
+class myrange:
+    def __init__(self, stop):
+        self.current = 0
+        self.stop = stop
+        
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current < self.stop:
+            r = self.current
+            self.current += 1
+            return r
+        
+        else:
+            raise StopIteration
+```
+```py
+for i in myrange(3):
+    print(i)
+```
+```py
+it = myrange(3).__iter__()
+it
+```
+```py
+it.__next__()
+```
+```py
+it.__next__()
+```
+```py
+it.__next__()
+```
+```py
+it.__next__()
+```
+```py
+range(10)[4]
+```
+```py
+myrange(10)[0]      # 색인은 되지 않음. range()와 완전히 같진 않음.
+```
+**인덱스로 접근할 수 있는 이터레이터 만들기**
+- **getitem()** 함수 작성
+- 딥러닝 프레임워크에 데이터셋을 준비할 때 이런 방식이 사용됨
+
+```
+class 이터레이터이름:
+    def __getitem__(self, 인덱스):
+        코드
+```
+```py
+class myrange:
+    def __init__(self, stop):
+        self.stop = stop
+        
+    def __getitem__(self, index):
+        if index < self.stop:
+            return index
+        else:
+            raise IndexError
+
+myrange(10)[6]
+```
+# 제너레이터
+
+- 이터레이터를 만들어 주는 또다른 방식(함수를 사용)
+- 제너레이터는 이터레이터를 생성해 주는 함수
+- 이터레이터에서는 클래스 안에 iter(), next(), getitem()메서드들을 구현해야 하지만 제너레이터는 함수 안에서 yield라는 키워드만 사용하면 간단히 작성할 수 있음.
+```py
+def myrange2(): # 함수로써 이터레이터를 만들 수 있음
+    yield 0
+    yield 1
+    yield 2
+    yield 5
+```
+```py
+for i in myrange2():
+    print(i)
+```
+# 모듈과 패키지
+
+#### 모듈을 가져오는 방법
+
+- import module
+- import module1, module2
+
+#### 모듈을 사용하는 방법
+
+- 모듈.variable
+- 모듈.function()
+- 모듈.class()
+```py
+import math
+```
+```py
+math.sqrt(2)      # module.function
+```
+```py
+math.pi      # module.variable
+```
+- import module as nickname
+```py
+import math as m
+```
+```py
+m.sqrt(4.0)
+```
+```py
+m.pi
+```
+# 참고 (데이터 분석을 위해 파이썬 생태계에서 사용하는 모듈들)
+```py
+import numpy as np  # 관례적으로 사용
+import pandas as pd
+```
+- from 모듈 import 변수
+- from 모듈 import 함수
+- from 모듈 import 클래스
+```py
+from math import sqrt
+```
+```py
+import math
+```
+```py
+math.sqrt(2)
+math.pi
+```
+```py
+from math import pi
+```
+```py
+pi
+```
+- from module import variable, function, class, ...
+```py
+from math import sqrt, pi
+```
+```py
+sqrt(4)
+```
+```py
+from math import *
+```
+- from module import variable as nickname
+```py
+from math import pi as p
+
+p
+```
+**패키지 안의 모듈 가져오는 방법**
+- import package.module
+- import package.module1, package.module2
+
+**패키지 안의 모듈 사용하는 방법**
+- package.module.variable
+- package.module.function()
+- package.module.class()
+```py
+import urllib.request
+```
+```py
+reponse = urllib.request.urlopen("http://www.google.co.kr")  # package.module.function()
+```
+```py
+reponse.status
+```
+- import package.module as name
+```py
+import urllib.request as r
+```
+```py
+response = r.urlopen("http://www.google.co.kr")
+response.status
+```
+- from package.module import variable
+- from package.module import class
+- from package.module import function
+- from package.module import function, class, variable
+```py
+from urllib.request import urlopen
+
+response = r.urlopen("http://www.google.co.kr")
+response.status
+```
+- from package.module import *
+```py
+from urllib.request import *
+
+response = r.urlopen("http://www.google.co.kr")
+response.status
+```
+**나만의 모듈 만들어서 사용하기**
+```py
+import square2
+```
+```py
+square2.base
+```
+```py
+square2.square2(5)  # 2 ** 5를 계산
+```
+```py
+from square2 import square2
+```
+```py
+square2(10)
+```
+```py
+import Person
+```
+```py
+me = Person.Person("지우근", 25, "경기 파주")
+me.greeting()
+```
+```py
+%run hello2.py   # anaconda prompt에서 python hello2.py
+```
+```py
+%run main.py
+```
+```py
+%run test.py
+```
+```py
+%run calc.py
+```
+```py
+import calc
+```
+```py
+calc.add(10, 20)
+```
+```py
+calc.mul(500, 200)
+```
+```py
+import calcpkg.operation
+calcpkg.operation.add(10, 20)
+```
+```py
+import calcpkg.geometry
+calcpkg.geometry.triangle_area(10, 10)
+```
+```py
+from calcpkg.operation import add, mul
+```
+```py
+add(10, 20)
+```
+```py
+mul(10, 20)
+```
+```py
+from calcpkg.geometry import *
+```
+```py
+triangle_area(10, 10)
+```
+```py
+rectangle_area(10, 10)
+```
