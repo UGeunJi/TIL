@@ -727,3 +727,720 @@ if __name__ == "__main__" :
 대기 줄 상태 :  [None, None, None, None, None]
 식당 영업 종료!
 ```
+# 이진 트리 순회
+
+```python
+class TreeNode() :
+    def __init__ (self) :
+        self.left = None
+        self.data = None
+        self.right = None
+
+node1 = TreeNode()
+node1.data = '화사'
+
+node2 = TreeNode()
+node2.data = '솔라'
+node1.left = node2
+
+node3 = TreeNode()
+node3.data = '문별'
+node1.right = node3
+
+node4 = TreeNode()
+node4.data = '휘인'
+node2.left = node4
+
+node5 = TreeNode()
+node5.data = '쯔위'
+node2.right = node5
+
+node6 = TreeNode()
+node6.data = '선미'
+node3.left = node6
+
+def preorder(node) :
+    if node == None:
+        return
+
+    print(node.data, end='->')
+    preorder(node.left)
+    preorder(node.right)
+
+def inorder(node):
+    if node == None :
+        return
+
+    inorder(node.left)
+    print(node.data, end='->')
+    inorder(node.right)
+
+def postorder(node):
+    if node == None :
+        return
+
+    postorder(node.left)
+    postorder(node.right)
+
+    print(node.data, end='->')
+
+print('전위 순회 : ', end = '')
+preorder(node1)
+print('끝')
+print('중위 순회 : ', end = '')
+inorder(node1)
+print('끝')
+print('후위 순회 : ', end = '')
+postorder(node1)
+print('끝')
+```
+
+```
+전위 순회 : 화사->솔라->휘인->쯔위->문별->선미->끝
+중위 순회 : 휘인->솔라->쯔위->화사->선미->문별->끝
+후위 순회 : 휘인->쯔위->솔라->선미->문별->화사->끝
+```
+
+# 이진 탐색 트리
+
+```python
+## 함수 선언 부분 ##
+class TreeNode() :
+    def __init__ (self) :
+        self.left = None
+        self.data = None
+        self.right = None
+
+## 전역 변수 선언 부분 ##
+memory = []
+root = None
+nameAry = ['블랙핑크', '레드벨벳', '마마무', '에이핑크',  '걸스데이', '트와이스' ]
+
+## 메인 코드 부분 ##
+node = TreeNode()
+node.data = nameAry[0]
+root = node
+memory.append(node)
+
+for name in nameAry[1:] :
+    node = TreeNode()
+    node.data = name
+    current = root
+
+    while True :
+        if name < current.data :
+            if current.left == None:
+                current.left = node
+                break
+            current = current.left
+
+        else :
+            if current.right == None:
+                current.right = node
+                break
+            current = current.right
+
+    memory.append(node)
+print("이진 탐색 트리 구성 완료!")
+```
+
+```
+이진 탐색 트리 구성 완료!
+```
+
+```python
+preorder(root)
+```
+
+```
+블랙핑크->레드벨벳->걸스데이->마마무->에이핑크->트와이스->
+```
+
+```python
+inorder(root)
+```
+
+```
+걸스데이->레드벨벳->마마무->블랙핑크->에이핑크->트와이스->
+```
+
+```python
+postorder(root)
+```
+
+```
+걸스데이->마마무->레드벨벳->트와이스->에이핑크->블랙핑크->
+```
+
+# 이진 탐색 트리 검색
+
+```python
+findName = '마마무'
+
+current = root
+while True :
+    if findName == current.data:
+        print(findName, '을(를) 찾음.')
+        break
+    elif findName < current.data:
+        if current.left == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.left
+    else :
+        if current.right == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.right
+```
+
+```
+마마무 을(를) 찾음.
+```
+
+```python
+findName = '바마무'       # 없으면 없다고 뜸
+
+current = root
+while True :
+    if findName == current.data:
+        print(findName, '을(를) 찾음.')
+        break
+    elif findName < current.data:
+        if current.left == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.left
+    else :
+        if current.right == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.right
+```
+
+```
+바마무 이(가) 트리에 없음
+```
+
+```python
+findName = '걸스데이'
+
+current = root
+while True :
+    if findName == current.data:
+        print(findName, '을(를) 찾음.')
+        break
+    elif findName < current.data:
+        if current.left == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.left
+    else :
+        if current.right == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.right
+```
+
+```
+걸스데이 을(를) 찾음.
+```
+
+```python
+findName = '블랙핑크'
+
+current = root
+while True :
+    if findName == current.data:
+        print(findName, '을(를) 찾음.')
+        break
+    elif findName < current.data:
+        if current.left == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.left
+    else :
+        if current.right == None :
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.right
+```
+
+```
+블랙핑크 을(를) 찾음.
+```
+
+# 이진 탐색 트리 삭제
+
+```python
+deleteName = '마마무'
+current = root
+parent = None
+while True:
+    if deleteName == current.data :
+        if current.left == None and current.right == None :
+            if parent.left == current :
+                parent.left = None
+            else :
+                parent.right = None
+            del(current)
+        elif current.left != None and current.right == None :
+            if parent.left == current :
+                parent.left = current.left
+            else :
+                parent.right = current.left
+            del(current)
+        elif current.left == None and current.right != None :
+            if parent.left == current:
+                parent.left = current.right
+            else:
+                parent.right = current.right
+            del(current)
+        print(deleteName, '이(가) 삭제됨.')
+        break
+    elif deleteName < current.data :
+        if current.left == None :
+            print(deleteName, '이(가) 트리에 없음')
+            break
+        parent = current
+        current = current.left
+    else:
+        if current.right == None :
+            print(deleteName, '이(가) 트리에 없음')
+            break
+        parent = current
+        current = current.right
+```
+
+```
+마마무 이(가) 삭제됨.
+```
+
+# 선택 정렬
+
+```python
+## 함수 선언 부분 ##
+def selectionSort(ary) :
+    n = len(ary)
+    for i in range(0, n - 1) :
+        minIdx = i
+        for k in range(i + 1, n) :    # cycle의 반복
+            if ary[k] < ary[minIdx]:
+                minIdx = k
+            ary[minIdx], ary[i] = ary[i], ary[minIdx]
+    return ary
+
+## 전역 변수 선언 부분 ##
+dataAry = [188, 162, 168, 120, 50, 150, 177, 105]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = selectionSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [188, 162, 168, 120, 50, 150, 177, 105]
+정렬 후 --> [105, 50, 120, 150, 162, 168, 177, 188]
+```
+
+# 선택 정렬 응용 문제
+
+**내림차순으로 자릿수 정렬하기**
+
+- 시간 제한 2초 | 난이도 실버 Ⅴ | 백준 온라인 저지 1427번
+- 배열을 정렬하는 것은 쉽다. 수가 주어지면 그 수의 각 자릿수를 내림차순으로 정렬하시오.
+  **입력**
+- 1번째 줄에 정렬할 수 N이 주어진다. N은 1,000,000,000보다 작거나 같은 자연수다.
+  **출력**
+- 1번째 줄에 자릿수를 내림차순 정렬한 수를 출력한다.
+
+```python
+n_list = input()
+
+n = sorted(n_list, reverse = True)
+
+n
+```
+
+```
+124125
+
+
+
+
+
+['5', '4', '2', '2', '1', '1']
+```
+
+```python
+print(len(n))
+```
+
+```
+6
+```
+
+```python
+a = list(input())
+n = len(a)
+
+for i in range(n):
+    maxIdx = i
+    for j in range((i + 1), n):
+        if a[maxIdx] < a[j]:
+            maxIdx = j
+    a[i], a[maxIdx] = a[maxIdx], a[i]
+
+for i in range(len(a)):
+    print(a[i], end = '')
+```
+
+```
+978125
+987521
+```
+
+# 삽입 정렬
+
+```python
+## 함수 선언 부분 ##
+def insertionSort(ary) :
+    n = len(ary)
+    for end in range(1, n) :
+        for cur in range(end, 0, -1) :
+            if ary[cur -1] > ary[cur]:            # >: 오름차순, <: 내림차순
+                ary[cur - 1], ary[cur] = ary[cur], ary[cur - 1]
+    return ary
+
+## 전역 변수 선언 부분 ##
+dataAry = [188, 162, 168, 120, 50, 150, 177, 105]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = insertionSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [188, 162, 168, 120, 50, 150, 177, 105]
+정렬 후 --> [50, 105, 120, 150, 162, 168, 177, 188]
+```
+
+# 삽입 정렬 응용
+
+**성적별 조 편성하기**
+
+- 학생의 성적별로 정렬한 후 가장 성적이 높은 학생과 가장 성적이 낮은 학생을 짝으로 조를 만들어 주자. 전체 학생 수는 짝수라고 가정한다.
+
+```python
+## 함수 선언 부분 ##
+def scoreSort(ary) :
+    n = len(ary)
+    for end in range(1, n) :
+        for cur in range(end, 0, -1) :
+            if ( ary[cur-1][1] > ary[cur][1] ) :
+                ary[cur-1], ary[cur] = ary[cur], ary[cur-1]
+    return ary
+
+## 전역 변수 선언 부분 ##
+scoreAry = [['선미', 88], ['초아', 99], ['화사', 71], ['영탁', 78], ['영웅', 67], ['민호', 92]]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', scoreAry)
+scoreAry = scoreSort(scoreAry)
+print('정렬 후 -->', scoreAry)
+print('## 성적별 조 편성표 ##')
+
+for i in range(len(scoreAry)//2) :
+    print(scoreAry[i][0], scoreAry[-i-1][0])
+```
+
+```
+정렬 전 --> [['선미', 88], ['초아', 99], ['화사', 71], ['영탁', 78], ['영웅', 67], ['민호', 92]]
+정렬 후 --> [['영웅', 67], ['화사', 71], ['영탁', 78], ['선미', 88], ['민호', 92], ['초아', 99]]
+## 성적별 조 편성표 ##
+영웅 초아
+화사 민호
+영탁 선미
+```
+
+```python
+## 함수 선언 부분 ##
+def scoreSort(ary) :
+    n = len(ary)
+    for end in range(1, n) :
+        for cur in range(end, 0, -1) :
+            if ( ary[cur-1][1] > ary[cur][1] ) :
+                ary[cur-1], ary[cur] = ary[cur], ary[cur-1]
+    return ary
+
+## 전역 변수 선언 부분 ##
+scoreAry = [['선미', 88], ['초아', 99], ['화사', 71], ['영탁', 78], ['영웅', 67], ['민호', 92]]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', scoreAry)
+scoreAry = scoreSort(scoreAry)
+print('정렬 후 -->', scoreAry)
+print('## 성적별 조 편성표 ##')
+
+for i in range(len(scoreAry)//2) :
+    print(scoreAry[i][0], scoreAry[len(scoreAry)-i-1][0])
+```
+
+```
+정렬 전 --> [['선미', 88], ['초아', 99], ['화사', 71], ['영탁', 78], ['영웅', 67], ['민호', 92]]
+정렬 후 --> [['영웅', 67], ['화사', 71], ['영탁', 78], ['선미', 88], ['민호', 92], ['초아', 99]]
+## 성적별 조 편성표 ##
+영웅 초아
+화사 민호
+영탁 선미
+```
+
+# 버블 정렬
+
+```python
+## 함수 선언 부분 ##
+def insertionSort(ary) :
+    n = len(ary)
+    for end in range(1, n) :
+        for cur in range(0, end) :
+            if ary[cur] < ary[cur+1]:            # >: 오름차순, <: 내림차순
+                ary[cur], ary[cur+1] = ary[cur+1], ary[cur]
+    return ary
+
+## 전역 변수 선언 부분 ##
+dataAry = [188, 162, 168, 120, 50, 150, 177, 105]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = insertionSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [188, 162, 168, 120, 50, 150, 177, 105]
+정렬 후 --> [188, 168, 162, 150, 177, 120, 105, 50]
+```
+
+# 개선된 버블 정렬
+
+```python
+## 함수 선언 부분 ##
+def bubbleSort(ary) :
+    n = len(ary)
+    for end in range(n-1, 0, -1) :
+        changeYN = False
+        for cur in range(0, end) :
+            if (ary[cur] > ary[cur+1]) :
+                ary[cur], ary[cur+1] = ary[cur+1], ary[cur]
+                changeYN = True
+        if changeYN == False:
+            break
+    return ary
+
+## 전역 변수 선언 부분 ##
+dataAry = [50, 105, 120, 188, 150, 162, 168, 177]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = bubbleSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [50, 105, 120, 188, 150, 162, 168, 177]
+정렬 후 --> [50, 105, 120, 150, 162, 168, 177, 188]
+```
+
+# 퀵 정렬
+
+```python
+## 함수 선언 부분 ##
+def quickSort(ary) :
+    n = len(ary)
+
+    if n <= 1 : # 정렬할 리스트의 개수가 1개 이하면
+        return ary
+
+    pivot = ary[n // 2]   # 기준값을 중간값으로 지정
+    leftAry, rightAry = [], []
+
+    for num in ary :
+        if num < pivot :
+            leftAry.append(num)
+        elif num > pivot :
+            rightAry.append(num)
+    return quickSort(leftAry) + [pivot] + quickSort(rightAry)
+
+## 전역 변수 선언 부분 ##
+dataAry = [188, 150, 168,  162, 105, 120,  177,  50]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = quickSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [188, 150, 168, 162, 105, 120, 177, 50]
+정렬 후 --> [50, 105, 120, 150, 162, 168, 177, 188]
+```
+
+```python
+## 함수 선언 부분 ##
+def quickSort(ary) :
+    n = len(ary)
+    if n <= 1 :   # 정렬할 리스트의 개수가 1개 이하면
+        return ary
+    pivot = ary[n // 2]   # 기준값을 중간 값으로 지정
+    leftAry, midAry, rightAry = [], [], []
+    for num in ary :
+        if num < pivot :
+            leftAry.append(num)
+        elif num > pivot :
+            rightAry.append(num)
+        else :
+            midAry.append(num)
+    return quickSort(leftAry) + midAry + quickSort(rightAry)
+## 전역 변수 선언 부분 ##
+dataAry = [120, 120, 188, 150, 168, 50, 50, 162, 105, 120,  177,  50]
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = quickSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [120, 120, 188, 150, 168, 50, 50, 162, 105, 120, 177, 50]
+정렬 후 --> [50, 50, 50, 105, 120, 120, 120, 150, 162, 168, 177, 188]
+```
+
+# 퀵 정렬 일반
+
+```python
+## 함수 선언 부분 ##
+def qSort(arr, start, end) :
+    if end <= start :
+        return
+    low = start
+    high = end
+    pivot = arr[(low + high) // 2]  # 작은 값은 왼쪽, 큰 값은 오른쪽으로 분리한다.
+    while low <= high :
+        while arr[low] < pivot :
+            low += 1
+        while arr[high] > pivot :
+            high -= 1
+        if low <= high :
+            arr[low], arr[high] = arr[high], arr[low]
+            low, high = low + 1, high - 1
+        mid = low
+        qSort(arr, start, mid-1)
+        qSort(arr, mid, end)
+def quickSort(ary) :
+    qSort(ary, 0, len(ary)-1)
+
+## 전역 변수 선언 부분 ##
+dataAry = [188, 150, 168, 162, 105, 120, 177, 50]
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+quickSort(dataAry)
+print('정렬 후 -->', dataAry)
+```
+
+```
+정렬 전 --> [188, 150, 168, 162, 105, 120, 177, 50]
+정렬 후 --> [50, 105, 120, 150, 162, 168, 177, 188]
+```
+
+# (실습 26) 선택 정렬과 퀵 정렬의 성능 비교하기
+
+- 선택 정렬은 O ( $n^2$) 의 연산횟수를, 퀵 정렬렬은 O(n log n)의 연산 횟수를 갖는다.
+- 정렬할 데이터양에 따라서 두 정렬 방식의 시간 차이를 비교해 본다.
+- 데이터는 1000, 10000, 12000, 15000개를 정렬한다.
+
+```python
+import random
+import time
+
+## 함수 선언 부분 ##
+def selectionSort(ary) :
+    n = len(ary)
+    for i in range(0, n-1) :
+        minIdx = i
+        for k in range(i+1, n) :
+            if (ary[minIdx] > ary[k]) :
+                minIdx = k
+        tmp = ary[i]
+        ary[i] = ary[minIdx]
+        ary[minIdx] = tmp
+
+    return ary
+
+def qSort(arr, start, end) :
+    if end <= start :
+        return
+
+    low = start
+    high = end
+
+    pivot = arr[(low + high) // 2]   # 작은 값은 왼쪽, 큰 값은 오른쪽으로 분리한다.
+    while low <= high:
+        while arr[low] < pivot :
+            low += 1
+        while arr[high] > pivot :
+            high -= 1
+        if low <= high :
+            arr[low], arr[high] = arr[high], arr[low]
+            low, high = low + 1, high - 1
+
+    mid = low
+
+    qSort(arr, start, mid-1)
+    qSort(arr, mid, end)
+
+def quickSort(ary) :
+    qSort(ary, 0, len(ary)-1)
+
+## 메인 코드 부분 ##
+countAry = [1000, 10000, 12000, 15000]
+
+for count in countAry :
+    tempAry = [ random.randint(10000, 99999) for _ in range(count)]
+    selectAry = tempAry[:]
+    quickAry = tempAry[:]
+
+    print("## 데이터 수 : ", count, "개")
+
+    start = time.time()
+    selectionSort(selectAry)
+    end = time.time()
+    print("    선택 정렬 --> %10.3f 초" % (end-start))
+
+    start = time.time()
+    quickSort(quickAry)
+    end = time.time()
+    print("    퀵 정렬  --> %10.3f 초" % (end-start))
+
+    print()
+
+    count *= 5
+```
+
+```
+## 데이터 수 :  1000 개
+    선택 정렬 -->      0.047 초
+    퀵 정렬  -->      0.005 초
+
+## 데이터 수 :  10000 개
+    선택 정렬 -->      4.143 초
+    퀵 정렬  -->      0.031 초
+
+## 데이터 수 :  12000 개
+    선택 정렬 -->      5.464 초
+    퀵 정렬  -->      0.031 초
+
+## 데이터 수 :  15000 개
+    선택 정렬 -->      9.077 초
+    퀵 정렬  -->      0.047 초
+```
