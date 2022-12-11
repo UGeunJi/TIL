@@ -22,7 +22,7 @@
 def factorial(n: int) -> int:
     """양의 정수 n의 팩토리얼값을 재귀적으로 구함"""
     if n > 0:
-        return n * factorial(n - 1)
+        return n * factorial(n - 1)       # n이 0보다 크다면 계속해서 
     else:
         return 1
 
@@ -48,10 +48,10 @@ if __name__=='__main__':
 
 def gcd(x: int, y: int) -> int:
     """정수값 x와 y의 최대 공약수를 반환"""
-    if y == 0:
+    if y == 0:                    # 나누어 떨어질 때
         return x
     else:
-        return gcd(y, x % y)
+        return gcd(y, x % y)      # 나누어 나머지가 0이 될 때까지
 
 if __name__ == '__main__':
     print('두 정숫값의 최대 공약수를 구합니다.')
