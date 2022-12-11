@@ -16933,97 +16933,6 @@ set(0)  # 0열에 퀸을 배치
  0 0 0 4 1 0 0 4
  0 0 0 4 1 0 0 5
  0 0 0 4 1 0 0 6
- 0
-
-
----------------------------------------------------------------------------
-
-KeyboardInterrupt                         Traceback (most recent call last)
-
-Input In [2], in <cell line: 20>()
-     17         else:
-     18             set(i + 1)          # 다음 열에 퀸을 배치
----> 20 set(0)
-
-
-Input In [2], in set(i)
-     16     put()
-     17 else:
----> 18     set(i + 1)
-
-
-Input In [2], in set(i)
-     16     put()
-     17 else:
----> 18     set(i + 1)
-
-
-    [... skipping similar frames: set at line 18 (4 times)]
-
-
-Input In [2], in set(i)
-     16     put()
-     17 else:
----> 18     set(i + 1)
-
-
-Input In [2], in set(i)
-     14 pos[i] = j               # 퀸을 j행에 배치
-     15 if i == 7:              # 모든 열에 퀸 배치를 종료
----> 16     put()
-     17 else:
-     18     set(i + 1)
-
-
-Input In [2], in put()
-      6 """각 열에 배치한 퀸의 위치를 출력"""
-      7 for i in range(8):
-----> 8     print(f'{pos[i]:2}', end = '')
-      9 print()
-
-
-File ~\anaconda3_NR\lib\site-packages\ipykernel\iostream.py:531, in OutStream.write(self, string)
-    529 is_child = (not self._is_master_process())
-    530 # only touch the buffer in the IO thread to avoid races
---> 531 self.pub_thread.schedule(lambda: self._buffer.write(string))
-    532 if is_child:
-    533     # mp.Pool cannot be trusted to flush promptly (or ever),
-    534     # and this helps.
-    535     if self._subprocess_flush_pending:
-
-
-File ~\anaconda3_NR\lib\site-packages\ipykernel\iostream.py:216, in IOPubThread.schedule(self, f)
-    214     self._events.append(f)
-    215     # wake event thread (message content is ignored)
---> 216     self._event_pipe.send(b'')
-    217 else:
-    218     f()
-
-
-File ~\anaconda3_NR\lib\site-packages\zmq\sugar\socket.py:547, in Socket.send(self, data, flags, copy, track, routing_id, group)
-    540         data = zmq.Frame(
-    541             data,
-    542             track=track,
-    543             copy=copy or None,
-    544             copy_threshold=self.copy_threshold,
-    545         )
-    546     data.group = group
---> 547 return super(Socket, self).send(data, flags=flags, copy=copy, track=track)
-
-
-File zmq\backend\cython\socket.pyx:718, in zmq.backend.cython.socket.Socket.send()
-
-
-File zmq\backend\cython\socket.pyx:765, in zmq.backend.cython.socket.Socket.send()
-
-
-File zmq\backend\cython\socket.pyx:242, in zmq.backend.cython.socket._send_copy()
-
-
-File ~\anaconda3_NR\lib\site-packages\zmq\backend\cython\checkrc.pxd:13, in zmq.backend.cython.checkrc._check_rc()
-
-
-KeyboardInterrupt: 
 ```
 
 ### 한정 작업과 분기 한정법
@@ -17043,7 +16952,7 @@ def put() -> None:
 def set (i: int) -> None:
     """i열의 알맞은 위치에 퀸을 배치"""
     for j in range(8):
-        if not flag[j]:           # j행에 퀸을 배치하지 않았으면
+        if not flag[j]:           # j행에 퀸을 배치하지 않았으면           (가정이 붙음)
             pos[i] = j            # 퀸을 j행에 배치
             if i == 7:           # 모든 열에 퀸 배치를 완료
                 put()
@@ -28022,100 +27931,6 @@ set(0)
  2 1 3 4 7 0 6 5
  2 1 3 4 7 5 0 6
  2 1 3 4 7 5 6 0
- 2 1
-
-
----------------------------------------------------------------------------
-
-KeyboardInterrupt                         Traceback (most recent call last)
-
-Input In [4], in <cell line: 24>()
-     21                 set(i + 1)        # 다음 열에 퀸을 배치
-     22                 flag[j] = False
----> 24 set(0)
-
-
-Input In [4], in set(i)
-     19 else:
-     20     flag[j] = True
----> 21     set(i + 1)        # 다음 열에 퀸을 배치
-     22     flag[j] = False
-
-
-Input In [4], in set(i)
-     19 else:
-     20     flag[j] = True
----> 21     set(i + 1)        # 다음 열에 퀸을 배치
-     22     flag[j] = False
-
-
-    [... skipping similar frames: set at line 21 (4 times)]
-
-
-Input In [4], in set(i)
-     19 else:
-     20     flag[j] = True
----> 21     set(i + 1)        # 다음 열에 퀸을 배치
-     22     flag[j] = False
-
-
-Input In [4], in set(i)
-     16 pos[i] = j            # 퀸을 j행에 배치
-     17 if i == 7:           # 모든 열에 퀸 배치를 완료
----> 18     put()
-     19 else:
-     20     flag[j] = True
-
-
-Input In [4], in put()
-      7 """각 열에 배치한 퀸의 위치를 출력"""
-      8 for i in range(8):
-----> 9     print(f'{pos[i]:2}', end = '')
-     10 print()
-
-
-File ~\anaconda3_NR\lib\site-packages\ipykernel\iostream.py:531, in OutStream.write(self, string)
-    529 is_child = (not self._is_master_process())
-    530 # only touch the buffer in the IO thread to avoid races
---> 531 self.pub_thread.schedule(lambda: self._buffer.write(string))
-    532 if is_child:
-    533     # mp.Pool cannot be trusted to flush promptly (or ever),
-    534     # and this helps.
-    535     if self._subprocess_flush_pending:
-
-
-File ~\anaconda3_NR\lib\site-packages\ipykernel\iostream.py:216, in IOPubThread.schedule(self, f)
-    214     self._events.append(f)
-    215     # wake event thread (message content is ignored)
---> 216     self._event_pipe.send(b'')
-    217 else:
-    218     f()
-
-
-File ~\anaconda3_NR\lib\site-packages\zmq\sugar\socket.py:547, in Socket.send(self, data, flags, copy, track, routing_id, group)
-    540         data = zmq.Frame(
-    541             data,
-    542             track=track,
-    543             copy=copy or None,
-    544             copy_threshold=self.copy_threshold,
-    545         )
-    546     data.group = group
---> 547 return super(Socket, self).send(data, flags=flags, copy=copy, track=track)
-
-
-File zmq\backend\cython\socket.pyx:718, in zmq.backend.cython.socket.Socket.send()
-
-
-File zmq\backend\cython\socket.pyx:765, in zmq.backend.cython.socket.Socket.send()
-
-
-File zmq\backend\cython\socket.pyx:242, in zmq.backend.cython.socket._send_copy()
-
-
-File ~\anaconda3_NR\lib\site-packages\zmq\backend\cython\checkrc.pxd:13, in zmq.backend.cython.checkrc._check_rc()
-
-
-KeyboardInterrupt: 
 ```
 
 ### 8퀸 문제 해결 프로그램 만들기
