@@ -14,10 +14,10 @@ from typing import MutableSequence
 def bubble_sort(a: MutableSequence) -> None:
     """버블 정렬"""
     n = len(a)
-    for i in range(n - 1):
-        for j in range(n - 1, i, -1):
-            if a[j - 1] > a[j]:
-                a[j - 1], a[j] = a[j], a[j - 1]
+    for i in range(n - 1):   # 전체 정렬
+        for j in range(n - 1, i, -1):         # i: 해당 순서에 속하는 칸까지
+            if a[j - 1] > a[j]:               # 대소 관계 비교
+                a[j - 1], a[j] = a[j], a[j - 1]     # If문에 해당되면 교환
 
 if __name__ == '__main__':
     print('버블 정렬을 수행합니다.')
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     x = [None] * num  # 원소 수가 num인 배열을 생성
 
     for i in range(num):
-        x[i] = int(input(f'x[{i}]: '))
+        x[i] = int(input(f'x[{i}]: '))        # 원소값 입력
 
     bubble_sort(x)     # 배열 x를 버블 정렬
 
@@ -76,7 +76,7 @@ def bubble_sort_verbose(a: MutableSequence) -> None:
         for j in range(n - 1, i , -1):
             for m in range(0, n - 1):
                 print(f'{a[m]:2}' + ('  ' if m != j - 1 else
-                                     ' +' if a[j - 1] > a[j] else ' -'),
+                                     ' +' if a[j - 1] > a[j] else ' -'),   # print문을 이용한 
                                      end='')
             print(f'{a[n - 1]:2}')
             ccnt += 1
@@ -165,7 +165,7 @@ def bubble_sort(a: MutableSequence) -> None:
             if a[j - 1] > a[j]:
                 a[j - 1], a[j] = a[j], a[j - 1]
                 exchng += 1
-        if exchng == 0:
+        if exchng == 0:    # 중간 방식: 교환이 없으면 더이상 동작하지 않도록
             break
 
 if __name__ == '__main__':
@@ -202,19 +202,19 @@ x[5] = 8
 ```
 
 ```python
-# 버블 정렬 알고리즘 구현하기(알고리즘의 개선 2)
+# 버블 정렬 알고리즘 구현하기(알고리즘의 개선 2)       # 정렬된 앞쪽의 인덱스는 다시 정렬하려고 탐색하지 않는 것
 
 def bubble_sort(a: MutableSequence) -> None:
-    """버블 정렬(스캔 범위를 제한)"""
+    """버블 정렬(스캔 범위를 제한)"""           
     n = len(a)
     k = 0
-    while k < n - 1:
-        last = n - 1
+    while k < n - 1:         # 마지막에 교환이 이루어진 인덱스부터 다시 시작
+        last = n - 1         # 처음엔 맨 끝 인덱스 저장
         for j in range(n - 1, k, -1):
             if a[j - 1] > a[j]:
                 a[j - 1], a[j] = a[j], a[j - 1]
-                last = j
-        k = last
+                last = j     # 교환이 이뤄지는 인덱스를 계속 저장
+        k = last             # 마지막으로 교환이 이뤄진 인덱스
 
 if __name__ == '__main__':
     print('버블 정렬을 수행합니다.')
@@ -258,69 +258,37 @@ x[5] = 9
 칵테일 정렬(cocktail sort), 칵테일 셰이커 정렬(cocktail shaker sort)이라고 합니다.
 
 ```python
-# 셰이커 정렬 알고리즘 구현하기
+# [Do it! 실습 6-5] 셰이커 정렬 알고리즘 구현하기
 
 from typing import MutableSequence
 
-def shaker_sort_verbose(a: MutableSequence) -> None:
-    """"셰이커 정렬(정렬 과정을 출력)"""
-    ccnt = 0  # 비교 횟수
-    scnt = 0  # 교환 횟수
+def shaker_sort(a: MutableSequence) -> None:
+    """셰이커 정렬"""
     left = 0
-    n = len(a)
     right = len(a) - 1
     last = right
-    i = 0
     while left < right:
-        print(f'패스{i + 1}')
-        i += 1
         for j in range(right, left, -1):
-            for m in range(0, n - 1):
-                print(f'{a[m]:2}' + ('  ' if m != j - 1 else
-                                    ' +' if a[j - 1] > a[j] else ' -'),
-                     end='')
-            print(f'{a[n - 1]:2}')
-            ccnt += 1
             if a[j - 1] > a[j]:
-                scnt += 1
                 a[j - 1], a[j] = a[j], a[j - 1]
                 last = j
-        left = last
-        for m in range(0, n - 1):
-            print(f'{a[m]:2}', end='  ')
-        print(f'{a[n - 1]:2}')
+        left = last                      # 마지막에 교환한 인덱스
 
-        if (left == right):
-             break
-        print(f'패스 {i + 1}')
-        i += 1
-        for j in range(left, right):
-            for m in range(0, n - 1):
-                print(f'{a[m]:2}' + ('  ' if m != j else
-                                    ' +' if a[j] > a[j + 1] else ' -'),
-                     end='')
-            print(f'{a[n - 1]:2}')
-            ccnt += 1
+        for j in range(left, right):     # 시작점을 오른쪽이 아닌 왼쪽부터도 추가
             if a[j] > a[j + 1]:
-                scnt += 1
                 a[j], a[j + 1] = a[j + 1], a[j]
                 last = j
-        right = last
-        for m in range(0, n - 1):
-            print(f'{a[m]:2}', end='  ')
-        print(f'{a[n - 1]:2}')
-    print(f'비교를 {ccnt}번 했습니다.')
-    print(f'교환을 {scnt}번 했습니다.')
+        right = last                
 
 if __name__ == '__main__':
-    print('셰이커 정렬을 수행합니다.')
+    print('셰이커 정렬을 수행합니다')
     num = int(input('원소 수를 입력하세요.: '))
-    x = [None] * num  # 원소 수 num인 배열을 생성
+    x = [None] * num    # 원소 수가 num인 배열을 생성
 
     for i in range(num):
         x[i] = int(input(f'x[{i}] : '))
 
-    shaker_sort_verbose(x)  # 배열 x를 단순 교환 정렬
+    shaker_sort(x)      # 배열 x를 단순 교환 정렬
 
     print('오름차순으로 정렬했습니다.')
     for i in range(num):
