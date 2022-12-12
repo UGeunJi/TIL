@@ -14,10 +14,10 @@ def selection_sort(a: MutableSequence) -> None:
     """단순 선택 정렬"""
     n = len(a)
     for i in range(n - 1):
-        min = i   # 정렬할 부분에서 가장 작은 원소의 인덱스
+        min = i   # 정렬할 부분에서 가장 작은 원소의 인덱스          # 일단 최솟값 정해놓고
         for j in range(i + 1, n):
-            if a[j] < a[min]:
-                min = j
+            if a[j] < a[min]:                    
+                min = j                      # 뒤에 더 작은 값이 있으면 그게 최솟값으로 바뀜
         a[j], a[min] = a[min], a[i]   # 정렬할 부분에서 맨 앞의 원소와 가장 작은 원소를 교환
 
 if __name__ == '__main__':
