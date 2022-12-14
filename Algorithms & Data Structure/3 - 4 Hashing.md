@@ -128,22 +128,27 @@ class ChainedHash:
 key를 해시의 크기 capacity로 나눈 나머지를 해시값으로 합니다.
 <br>
 <br>
+
 - key가 int형이 아닌 경우 <br>
 key가 정수가 아닌 경우 그 값으로는 바로 나눌 수 없습니다. 그래서 다음과 같은 표준 라이브러리로 형 변환을 해야 해시값을 얻을 수 있습니다.
 다음은 앞에 코드에서 사용한 표준 라이브러리입니다.
 
 ---
+
 - sha256 알고리즘: hashlib 모듈에서 제공하는 sha256은 RSA의 FIPS 알고리즘을 바탕으로 하며, 주어진 바이트(byte) 문자열의 해시값을 구하는 해시
 알고리즘의 생성자(constructor)입니다. hashlib 모듈은 sha256 외에도 MD5 알고리즘인 md5 등 다양한 해시 알고리즘을 제공합니다.
 <br>
 <br>
+
 - enconde() 함수: hashlib.sha256에는 바이트 문자열의 인수를 전달해야 합니다. 그래서 key를 str형 문자열로 변환한 뒤 그 문자열을
 encode() 함수에 전달하여 바이트 문자열을 생성합니다.
 <br>
 <br>
+
 - hexdigest() 함수: sha256 알고리즘에서 해시값을 16진수 문자열로 꺼냅니다.
 <br>
 <br>
+
 - int() 함수: hexdigest() 함수로 꺼낸 문자열을 16진수 문자열로 하는 int형으로 변환합니다.
 
 **return(int(hashlib.sha256(str(key).encode()).hexdigest(), 16) % self.capacity) 줄까지의 설명**
@@ -227,7 +232,7 @@ while True:
     else:                     # 종료
         break
 ```
-# 오픈 주소법
+## 오픈 주소법
 
 해시 충돌이 발생할 때 해결하는 또 다른 방법으로 오픈 주소법이 있습니다.
 오픈 주소법은 충돌이 발생했을 때 재해시(rehashing)를 수행하여 빈 버킷을 찾는 방법을 말하며 닫힌 해시법(closedhashing)이라고도 합니다.
@@ -340,7 +345,7 @@ class OpenHash:
             elif self.table[i] .stat == Status.DELETED:
                 print('-- 삭제 완료 --')
 ```
-# [Do it! 실습 3-8] 오픈 주소법을 구현하는 해시 클래스 OpenHash 사용
+## 오픈 주소법을 구현하는 해시 클래스 OpenHash 사용
 ```py
 from enum import Enum                                                   # 출력을 위한 코드
 from open_hash import OpenHash
