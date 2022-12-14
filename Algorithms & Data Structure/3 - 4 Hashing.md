@@ -232,7 +232,7 @@ while True:
     else:                     # 종료
         break
 ```
-## 오픈 주소법
+# 오픈 주소법
 
 해시 충돌이 발생할 때 해결하는 또 다른 방법으로 오픈 주소법이 있습니다.
 오픈 주소법은 충돌이 발생했을 때 재해시(rehashing)를 수행하여 빈 버킷을 찾는 방법을 말하며 닫힌 해시법(closedhashing)이라고도 합니다.
@@ -345,7 +345,7 @@ class OpenHash:
             elif self.table[i] .stat == Status.DELETED:
                 print('-- 삭제 완료 --')
 ```
-## 오픈 주소법을 구현하는 해시 클래스 OpenHash 사용
+# 오픈 주소법을 구현하는 해시 클래스 OpenHash 사용
 ```py
 from enum import Enum                                                   # 출력을 위한 코드
 from open_hash import OpenHash
