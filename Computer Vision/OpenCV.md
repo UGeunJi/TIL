@@ -2269,3 +2269,391 @@ cv2.setTrackbarPos('block size', 'dst', 5)
 cv2.waitKey()
 cv2.destroyAllWindows()
 ```
+```python
+import cv2
+import numpy as np
+```
+
+# 모폴로지 연산
+
+## 침식과 팽창
+
+```python
+src = cv2.imread('./data/milkdrop.bmp', cv2.IMREAD_GRAYSCALE)
+thresh, src_bin = cv2.threshold(src, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+erode = cv2.erode(src_bin, None)
+dilate = cv2.dilate(src_bin, None)
+
+cv2.imshow('src', src)
+cv2.imshow('src_bin', src_bin)
+cv2.imshow('erode', erode)
+cv2.imshow('dilate', dilate)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+## 열기와 닫기
+
+```python
+src = cv2.imread('./data/milkdrop.bmp', cv2.IMREAD_GRAYSCALE)
+thresh, src_bin = cv2.threshold(src, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+# 열기: 침식 -> 팽창
+opening = cv2.morphologyEx(src_bin, cv2.MORPH_OPEN, None, iterations=1)
+
+# 닫기: 팽창 -> 침식
+closing = cv2.morphologyEx(src_bin, cv2.MORPH_CLOSE, None, iterations=1)
+
+cv2.imshow('src_bin', src_bin)
+cv2.imshow('opening', opening)
+cv2.imshow('closing', closing)
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+# 레이블링과 외곽선 검출
+
+## 레이블링 기본
+
+```python
+src = np.array([[0, 0, 1, 1, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 1, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 1, 0],
+                [0, 0, 0, 1, 1, 1, 1, 0],
+                [0, 0, 0, 1, 0, 0, 1, 0],
+                [0, 0, 1, 1, 1, 1, 1, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]]).astype(np.uint8)
+
+src = src * 255
+cnt, labels = cv2.connectedComponents(src)
+
+print(cnt)
+print(labels)
+```
+
+```
+4
+[[0 0 1 1 0 0 0 0]
+ [1 1 1 1 0 0 2 0]
+ [1 1 1 1 0 0 0 0]
+ [0 0 0 0 0 3 3 0]
+ [0 0 0 3 3 3 3 0]
+ [0 0 0 3 0 0 3 0]
+ [0 0 3 3 3 3 3 0]
+ [0 0 0 0 0 0 0 0]]
+```
+
+```python
+src = cv2.imread('./data/circles.jpg', cv2.IMREAD_GRAYSCALE)
+thresh, src_bin = cv2.threshold(src, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+
+cnt, labels = cv2.connectedComponents(src_bin)
+
+dst = cv2.cvtColor(src, cv2.COLOR_GRAY2BGR)  # 객체별로 색깔을 다르게 표시할 3차원 도화지 준비
+
+dst[labels == 0] = (0, 100, 123)    # 배경
+dst[labels == 1] = (255, 100, 123)  # 1번 객체
+dst[labels == 2] = (61, 200, 313)   # 2번 객체
+dst[labels == 3] = (25, 100, 323)   # 3번 객체
+
+cv2.imshow('src_bin', src_bin)
+cv2.imshow('src', src)
+cv2.imshow('dst', dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+## 레이블링 응용
+
+```python
+src = cv2.imread('./data/circles.jpg', cv2.IMREAD_GRAYSCALE)
+thresh, src_bin = cv2.threshold(src, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+
+cnt, labels, stats, centroids = cv2.connectedComponentsWithStats(src_bin)
+
+dst = cv2.cvtColor(src, cv2.COLOR_GRAY2BGR)  # 객체별로 색깔을 다르게 표시할 3차원 도화지 준비
+
+for i in range(1, cnt):  # 객체 1, 2, 3
+    b = np.random.randint(0, 256)
+    g = np.random.randint(0, 256)
+    r = np.random.randint(0, 256)
+    dst[labels == i] = (b, g, r)
+
+    # bounding box --> rectangle
+    x, y, width, height, area = stats[i]
+    cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 0, 255))
+
+    # centroids --> circle
+    cx, cy = centroids[i]
+    cv2.circle(dst, (int(cx), int(cy)), 5, (255, 0, 0), -1)
+
+
+cv2.imshow('src_bin', src_bin)
+cv2.imshow('src', src)
+cv2.imshow('dst', dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+src = cv2.imread('./data/keyboard.bmp')   # BGR 3 채널 데이터
+
+gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+
+thresh, src_bin = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+cnt, labels, stats, centroids = cv2.connectedComponentsWithStats(src_bin)
+
+dst = src.copy()  # BFR 3 채널 도화지
+
+for i in range(1, cnt):   # 0번 배경은 제외, 1 ~ 37번 객체
+    x, y, width, height, area = stats[i]
+    if area > 20:
+        cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 255))
+
+cv2.imshow('src_bin', src_bin)
+cv2.imshow('src', src)
+cv2.imshow('dst', dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+## 외곽선 검출과 그리기
+
+```python
+src = cv2.imread('./data/contours.bmp')
+gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+thresh, gray_bin = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)
+
+dst = src.copy()
+contours, hierarchy = cv2.findContours(gray_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+
+for i in range(9):
+    b = np.random.randint(0, 256)
+    g = np.random.randint(0, 256)
+    r = np.random.randint(0, 256)
+    cv2.drawContours(dst, contours, i, (b, g, r), 3)
+
+cv2.imshow('gray_bin', gray_bin)
+cv2.imshow('src', src)
+cv2.imshow('dst', dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+src = cv2.imread('./data/thumbs_up_down.jpg')
+gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+
+thresh, gray_bin = cv2.threshold(gray, 220, 255, cv2.THRESH_BINARY_INV)
+
+contours, hierarchy = cv2.findContours(gray_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+print(len(contours))
+
+dst = src.copy()
+cv2.drawContours(dst, contours, -1, (0, 0, 255), 3, cv2.LINE_AA)
+
+# cv2.imshow('gray_bin', gray_bin)
+# cv2.imshow('gray', gray)
+cv2.imshow('dst', dst)
+cv2.imshow('src', src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```
+2
+```
+
+```python
+# 왼손의 bounding box만 그리기
+
+left_hand = contours[1]  # 왼손을 둘러싸고 있는 점의 좌표들
+x, y, w, h = cv2.boundingRect(left_hand)
+
+dst2 = src.copy()
+
+cv2.rectangle(dst2, (x, y), (x + w, y + h), (255, 0, 255), 3)
+
+cv2.imshow('dst2', dst2)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+# 오른손의 bounding box만 그리기
+
+right_hand = contours[0]  # 오른손을 둘러싸고 있는 점의 좌표들
+x, y, w, h = cv2.boundingRect(right_hand)
+
+dst2 = src.copy()
+
+cv2.rectangle(dst2, (x, y), (x + w, y + h), (255, 0, 255), 3)
+
+cv2.imshow('dst2', dst2)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+# 객체 검출
+
+## 캐스케이스 분류기와 얼굴 검출
+
+**opencv**
+https://docs.opencv.org/3.4/db/d28/tutorial_cascade_classifier.html
+
+**haar cascade classifier**
+https://towardsdatascience.com/viola-jones-algorithm-and-haar-cascade-classifier-ee3bfb19f7d8
+
+https://webnautes.tistory.com/1352 (한글 블로그)
+
+**adaboost**
+https://www.youtube.com/watch?v=LsK-xG1cLYA (유튜브)
+
+```python
+image = cv2.imread('./data/lena.jpg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+face_cascade = cv2.CascadeClassifier('./data/haarcascade_frontalface_default.xml')
+
+faces = face_cascade.detectMultiScale(gray)
+
+for face in faces:
+    x, y, w, h = face
+    cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+cv2.imshow('image', image)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+image = cv2.imread('./data/kids2.png')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+face_cascade = cv2.CascadeClassifier('./data/haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('./data/haarcascade_eye.xml')
+
+faces = face_cascade.detectMultiScale(gray)
+
+for face in faces:
+    x, y, w, h = face
+    cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+    face_rect = image[y : y + h:, x : x + w]
+    eyes = eye_cascade.detectMultiScale(face_rect)
+
+    for eye in eyes:
+        x1, y1, w1, h1 = eye
+        cv2.rectangle(face_rect, (x1, y1), (x1 + w1, y1 + h1), (255, 0, 255), 2)
+
+cv2.imshow('image', image)
+# cv2.imshow('face_rect', face_rect)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+# detectMultiScale
+# scaleFactor : 검색 윈도우 확대 비율 (default =1.1)
+# minNeighbors : 검출 영역으로 선택하기 위한 최소 검출 횟수 (default = 3)
+# minSize : 검출할 객체의 최소크기
+# maxSize : 검출할 객체의 최대크기
+```
+
+```python
+image = cv2.imread('./data/multi_faces.jpg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+face_casecade = cv2.CascadeClassifier('./data/haarcascade_frontalface_default.xml')
+#faces = face_casecade.detectMultiScale(gray, 1.3, 8)
+#faces = face_casecade.detectMultiScale(gray, minSize=(100, 100), maxSize=(130, 130))
+faces = face_casecade.detectMultiScale(gray, 2, 5)
+
+for face in faces:
+    x, y, w, h = face
+    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 255), 2)
+
+cv2.imshow('image', image)    
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+
+```python
+import cv2
+import numpy as np
+```
+
+## HOG 알고리즘과 보행자 검출
+
+**HOG Descriptor**
+https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a723b95b709cfd3f95cf9e616de988fc8
+
+```python
+src = cv2.imread('./data/people1.png')
+
+hog = cv2.HOGDescriptor()
+hog_feature = hog.compute(src)
+hog_feature.shape   # (bin의 개수(9) * 셀의 개수(4) * 가로블록(7) * 세로 블록(15))
+```
+
+```
+(3780,)
+```
+
+```python
+import matplotlib.pyplot as plt
+plt.imshow(cv2.cvtColor(src, cv2.COLOR_BGR2RGB))
+```
+
+```
+<matplotlib.image.AxesImage at 0x20b86953460>
+```
+
+![image](https://user-images.githubusercontent.com/84713532/209034901-331fe4e1-fabf-4a6d-8f5f-ab281d3860d5.png)
+
+
+```python
+src = cv2.imread('./data/people1.png')
+win_size = (src.shape[1], src.shape[0])
+block_size = (16, 16)
+block_stride = (8, 8)
+cell_size = (8, 8)
+nbins = 9
+
+hog = cv2.HOGDescriptor(win_size, block_size, block_stride, cell_size, nbins)
+hog_feature = hog.compute(src)
+hog_feature.shape
+```
+
+```
+(3780,)
+```
+
+```python
+from skimage.feature import hog  # hog feature 생성
+
+src = cv2.imread('./data/people1.png')
+gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+
+hog_feature, hog_image = hog(gray, pixels_per_cell = (8, 8), cells_per_block = (2, 2), block_norm = 'L2-Hys', transform_sqrt=False,
+    visualize=True, feature_vector=True)
+
+print(hog_feature.shape)
+
+fig = plt.figure()
+plt.subplot(121)
+plt.imshow(src)
+
+plt.subplot(122)
+plt.imshow(hog_image, cmap='gray')
+```
+
+```
+(3780,)
+
+<matplotlib.image.AxesImage at 0x20b8a308e20>
+```
+![image](https://user-images.githubusercontent.com/84713532/209034944-88c754c0-d5c2-42a4-a216-f42f9fd815d5.png)
