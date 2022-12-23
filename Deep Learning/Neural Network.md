@@ -773,3 +773,182 @@ dW # net.W를 미분한 기울기 벡터
 array([[ 0.11412845,  0.15547512, -0.26960357],
        [ 0.17119268,  0.23321268, -0.40440535]])
 ```
+# 신경망 학습
+
+```python
+import numpy as np
+from dataset.mnist import load_mnist
+```
+
+## Helper functions
+
+```python
+# 손실함수 (Cross Entropy)
+def cross_entropy_error(y, t):
+    delta = 1e-7 # 0.0000001
+
+    if y.ndim == 1:
+        t = t.reshape(1, t.size) 
+        y = y.reshape(1, y.size)
+
+    batch_size = y.shape[0]
+    return -np.sum(t*np.log(y+delta))/batch_size
+```
+
+```python
+# 신경망에서 사용할 W(Matrix 형태)의 편미분 행렬을 구하는 함수
+# 신경망의 기울기 : 그레디언트 (편미분 벡터)
+def numerical_gradient(f, x): # x의 shape이 (784, 20) => grads 도 (784, 20)
+    h = 1e-4 # 0.0001
+    grads = np.zeros_like(x)
+
+    it = np.nditer(x, flags=["multi_index"], op_flags=["readwrite"])
+
+    while not it.finished:
+        idx = it.multi_index
+        tmp_val = x[idx]
+
+        x[idx] = tmp_val + h
+        fxh1 = f(x) # f(x+h)
+        x[idx] = tmp_val - h
+        fxh2 = f(x) # f(x-h)
+
+        grads[idx] = (fxh1 - fxh2) / (2*h)
+        x[idx] = tmp_val
+        it.iternext()
+
+    return grads
+```
+
+```python
+# Softmax
+def softmax(x):
+    if x.ndim == 2:
+        x = x.T # 10*100
+        x = x - np.max(x, axis=0) # 10*100 - 100 = 10*100
+        y = np.exp(x) / np.sum(np.exp(x), axis=0)
+        return y.T 
+
+    x = x - np.max(x) # 오버플로 대책
+    return np.exp(x) / np.sum(np.exp(x))
+```
+
+```python
+# Sigmoid
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+```
+
+## 2층 신경망 구현하기
+
+```python
+class TwoLayerNet:
+    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
+        # 모델 파라미터 초기화
+        self.params = {}
+        self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)  # (784, 20)
+        self.params['b1'] = np.zeros(hidden_size)       # (20, )
+        self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)   # (20, 10)
+        self.params['b2'] = np.zeros(output_size)       # (10, )
+
+    def predict(self, x):
+        W1, W2 = self.params['W1'], self.params['W2']
+        b1, b2 = self.params['b1'], self.params['b2'],
+
+        a1 = np.dot(x, W1) + b1     # (20, )
+        z1 = sigmoid(a1)            # (20, )
+        a2 = np.dot(z1, W2) + b2    # (10, )
+        z2 = softmax(a2)            # (10, )
+        return z2
+
+    def loss(self, x, t):
+        y = self.predict(x)
+        loss = cross_entropy_error(y, t)
+        return loss
+
+    def numerical_gradient(self, x, t):
+        f = lambda w: self.loss(x, t)
+
+        grads = {}
+        grads['W1'] = numerical_gradient(f, self.params['W1'])  # W1 (784, 20) --> dW1 (784, 20)
+        grads['b1'] = numerical_gradient(f, self.params['b1'])  # b1 (20, ) --> db1 (20, )
+        grads['W2'] = numerical_gradient(f, self.params['W2'])  # W2 (20, 10) --> dW2 (20, 10)
+        grads['b2'] = numerical_gradient(f, self.params['b2'])  # b2 (10, ) --> db2 (10, )
+        return grads
+
+    def accuracy(self, ):
+        pass
+```
+
+```python
+(X_train, y_train), (X_test, y_test) = load_mnist(normalize=True, flatten=True, one_hot_label=True)
+```
+
+```python
+network = TwoLayerNet(input_size = 784, hidden_size = 20, output_size = 10)
+```
+
+```python
+# Hyper Parameter
+iters_num = 1000
+batch_size = 100 # mini batch size
+learning_rate = 0.1
+
+for i in range(iters_num):
+    batch_mask = np.random.choice(60000, 100)
+    x_batch = X_train[batch_mask]
+    t_batch = y_train[batch_mask]
+
+    # 1. Gradient
+    grads = network.numerical_gradient(x_batch, t_batch)
+
+    # 2. Gradient Descent (모델 파라미터 업데이트)
+    for keys in ('W1', 'W2', 'b1', 'b2'):
+        # W(new) <-- W(old) - (lr * Gradient): 경사 하강법
+        network.params[keys] = network.params[keys] - (learning_rate * grads[keys])
+
+    loss = network.loss(x_batch, t_batch)
+    print(loss)
+```
+
+```
+2.296413519548535
+2.2936651002506836
+2.2955634302552044
+2.3003798146752774
+2.2997176647342554
+2.2980852157645786
+2.299867600372201
+2.298694935196747
+2.300851053396086
+2.295233290173953
+2.293713768597055
+2.2939479259830806
+2.3006807613831977
+2.302486272539229
+2.3020922663609493
+2.2959038907496665
+2.3065646486137372
+2.291779590204008
+2.289093952268112
+2.3021323362250428
+2.3010013309517627
+2.2984018751230577
+2.295466993230261
+2.294979989588273
+2.300845718496004
+2.3039543119730603
+2.2974380667915155
+2.299113708435143
+2.2976091534388443
+2.291842072306648
+2.302750364124344
+2.301833745149696
+2.2916067057803318
+2.296609789685288
+2.3005388500407835
+.
+.
+.
+0.619284901240910
+```
