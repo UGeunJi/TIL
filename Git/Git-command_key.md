@@ -22,13 +22,4 @@
     <li>git checkout &lt branchname &gt: branch switch (git log 통해 작업 현황 확인)</li>
     <li>git checkout main -> git merge &lt branchname &gt -> git push: branch 병합 후 깃헙 업로드 </li>
     <li>git branch -d &lt branchname &gt: branch 삭제</li>
-  <div>
-    git branch 충돌 발생 시 대처 방법
-    <ol>
-      <li>충돌 발생 시 해당 파일로 들어가보면 선택할 수 있도록 구분 되어 있음</li>
-      <li>남기고 싶은 부분만 남기고, 나머진 지운 다음 저장</li>
-      <li>main branch로 이동 후 git merge &lt branchname &gt</li>
-      <li>git push</li>
-    </ol>
-  </div>
   </ul>
