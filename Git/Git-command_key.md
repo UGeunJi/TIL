@@ -31,3 +31,8 @@
     <li>git log --pretty=oneline: commit 정보를 우리가 지정한대로 출력(한줄로 출력함)</li>
     <li>git log --pretty=format:"%h -> %an, %ar : %s" --graph: %h (커밋할 때 해시값), %an (authorname) %ar (작성날짜) %s (커밋 주제) 그래프와 함께 출력 - format을 통해 형식 지정</li>
   </ul>
+  <h2>git rebase command로 commit 수정/삭제</h2>
+  <ul>
+    <li>git rebase -i HEAD~3: iteractive하게 3개의 커밋 내역을 확인 -> 아래의 명령어를 목적에 맞게 사용</li>
+    <li>git rebase -i &lt 특정 해시값 &gt: 특정 커밋 위쪽으로 모두 선택</li>
+  </ul>
