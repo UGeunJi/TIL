@@ -23,3 +23,11 @@
     <li>git checkout main -> git merge &lt branchname &gt -> git push: branch 병합 후 깃헙 업로드 </li>
     <li>git branch -d &lt branchname &gt: branch 삭제</li>
   </ul>
+    <h2>log Command Keys</h2>
+  <ul>
+    <li>git log --stat: 각 commit에 대한 통계 정보 출력</li>
+    <li>git log --graph: branch와 병합 정보를 그래프로 출력</li>
+    <li>git log --p -number: commit에 적용된 구체적인 항목들을 출력(개수 설정 가능)</li>
+    <li>git log --pretty=oneline: commit 정보를 우리가 지정한대로 출력(한줄로 출력함)</li>
+    <li>git log --pretty=format:"%h -> %an, %ar : %s" --graph: %h (커밋할 때 해시값), %an (authorname) %ar (작성날짜) %s (커밋 주제) 그래프와 함께 출력 - format을 통해 형식 지정</li>
+  </ul>
